@@ -21,6 +21,16 @@ use App\Http\Controllers\HomeController;
 
 // Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
+
+// Facility
+Route::prefix('facility')->group(function () {
+    Route::get('/', [AdminController::class,'facility_index'])->name('facility.index');
+    Route::get('/create', [AdminController::class,'facility_create'])->name('facility.create');
+    Route::post('/create', [AdminController::class,'facility_store'])->name('facility.store');
+    Route::get('/edit/{id}', [AdminController::class,'facility_edit'])->name('facility.edit');
+    Route::put('/edit/{id}', [AdminController::class,'facility_update'])->name('facility.update');
+    Route::get('/destroy/{id}', [AdminController::class,'facility_destroy'])->name('facility.destroy');
+});
 // User admin
 Route::prefix('user/admin')->group(function () {
     Route::get('/', [AdminController::class,'user_admin_index'])->name('user.admin.index');

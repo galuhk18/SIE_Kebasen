@@ -35,7 +35,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include("template.sidebar")
+        @include("template.sidebar_admin")
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
