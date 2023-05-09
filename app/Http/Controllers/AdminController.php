@@ -19,7 +19,9 @@ class AdminController extends Controller
     public function population_index() {
 
     }
-    
+    public function population_create() {
+        
+    }
     // Facility
     public function facility_index() {
         $data['facility'] = DB::table('facility')->get();
