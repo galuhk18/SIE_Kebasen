@@ -14,6 +14,12 @@ class AdminController extends Controller
         
         return view('admin.index');
     }
+
+    // Population
+    public function population_index() {
+
+    }
+    
     // Facility
     public function facility_index() {
         $data['facility'] = DB::table('facility')->get();
