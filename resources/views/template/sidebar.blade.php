@@ -29,20 +29,24 @@
 
     <li class="nav-item">
         <a class="nav-link" href="">
-            <i class="fas fa-users"></i>
-            <span>Data Siswa</span></a>
+            <i class="fas fa-user-secret"></i>
+            <span>Executive</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="">
-            <i class="fas fa-user-secret"></i>
-            <span>Data Admin</span></a>
+            <i class="fas fa-building"></i>
+            <span>Facility</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('user.admin.index') }}">
+            <i class="fas fa-users"></i>
+            <span>Admin</span></a>
     </li>
 
     <hr class="sidebar-divider my-0">
 
 
 
-    <hr class="sidebar-divider my-0">
 
 
 

@@ -20,13 +20,13 @@ $('body').on('click', '.delete-confirm', function (event) {
     const url = $(this).attr('href');
 
     Swal.fire({
-        title: 'Apakah kamu yakin?',
-        text: "Hapus data ini!",
+        title: 'Are you sure?',
+        text: "Delete this data",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, Hapus aja!'
+        confirmButtonText: 'Yes'
       }).then((result) => {
         if (result.value) {
             window.location.href = url;

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    @yield("page_title")
+    @yield("title")
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -128,6 +128,7 @@
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
 
     <script src="{{ asset('assets/js/demo/custom.js') }}"></script>
+    
     @yield('script')
 </body>
 
