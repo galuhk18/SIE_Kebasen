@@ -45,7 +45,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include("template.navbar")
+                @include("template.navbar_admin")
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -96,7 +96,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger" href="">Logout</a>
+                    <a class="btn btn-danger" href="{{ route('auth.admin.logout') }}">Logout</a>
                 </div>
             </div>
         </div>
