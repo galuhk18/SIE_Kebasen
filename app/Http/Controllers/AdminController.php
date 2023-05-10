@@ -274,7 +274,8 @@ class AdminController extends Controller
 
     // Death
     public function death_index() {
-
+        $data['death'] = DB::table('death')->get();
+        return view('admin.death.index', $data);
     }
 
     public function death_create() {
