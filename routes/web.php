@@ -21,7 +21,15 @@ use App\Http\Controllers\HomeController;
 
 // Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
-
+// Population
+Route::prefix('population')->group(function () {
+    Route::get('/', [AdminController::class,'population_index'])->name('population.index');
+    Route::get('/create', [AdminController::class,'population_create'])->name('population.create');
+    Route::post('/create', [AdminController::class,'population_store'])->name('population.store');
+    Route::get('/edit/{id}', [AdminController::class,'population_edit'])->name('population.edit');
+    Route::put('/edit/{id}', [AdminController::class,'population_update'])->name('population.update');
+    Route::get('/destroy/{id}', [AdminController::class,'population_destroy'])->name('population.destroy');
+});
 // Facility
 Route::prefix('facility')->group(function () {
     Route::get('/', [AdminController::class,'facility_index'])->name('facility.index');

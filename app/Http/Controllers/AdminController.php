@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -17,14 +18,146 @@ class AdminController extends Controller
 
     // Population
     public function population_index() {
-
+        $data['population'] = DB::table('population')->get();
+        return view('admin.population.index', $data);
     }
     public function population_create() {
+        $data['religion'] = Config::get('enums.religion');
+        $data['married'] = Config::get('enums.married');
+        $data['gender'] = Config::get('enums.gender');
+        $data['citizenship'] = Config::get('enums.citizenship');
         
+        return view('admin.population.create', $data);
     }
 
-    public function population_store() {
-        
+    public function population_store(Request $req) {
+        $req->validate([
+            'nik' => 'required',
+            'family_card' => 'required',
+            'name' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'date_of_birth' => 'required',
+            'birth_place' => 'required',
+            'phone_number' => 'required',
+            'religion' => 'required',
+            'citizenship' => 'required',
+            'married' => 'required',
+            'job' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+        ]);
+
+        try {
+            //code...
+            DB::table('population')->insert([
+                'nik' => $req->nik,
+                'family_card' => $req->family_card,
+                'name' => $req->name,
+                'gender' => $req->gender,
+                'address' => $req->address,
+                'date_of_birth' => $req->date_of_birth,
+                'birth_place' => $req->birth_place,
+                'phone_number' => $req->phone_number,
+                'religion' => $req->religion,
+                'citizenship' => $req->citizenship,
+                'married' => $req->married,
+                'job' => $req->job,
+                'father_name' => $req->father_name,
+                'mother_name' => $req->mother_name,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('population.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function population_edit($id) {
+        $data['religion'] = Config::get('enums.religion');
+        $data['married'] = Config::get('enums.married');
+        $data['gender'] = Config::get('enums.gender');
+        $data['citizenship'] = Config::get('enums.citizenship');
+        $data['population'] = DB::table('population')->where('id', $id)->first();
+        return view('admin.population.edit', $data);
+    }
+
+    public function population_update(Request $req, $id) {
+        $req->validate([
+            'nik' => 'required',
+            'family_card' => 'required',
+            'name' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'date_of_birth' => 'required',
+            'birth_place' => 'required',
+            'phone_number' => 'required',
+            'religion' => 'required',
+            'citizenship' => 'required',
+            'married' => 'required',
+            'job' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+        ]);
+
+        try {
+            //code...
+            DB::table('population')
+            ->where('id', $id)    
+            ->update([
+                'nik' => $req->nik,
+                'family_card' => $req->family_card,
+                'name' => $req->name,
+                'gender' => $req->gender,
+                'address' => $req->address,
+                'date_of_birth' => $req->date_of_birth,
+                'birth_place' => $req->birth_place,
+                'phone_number' => $req->phone_number,
+                'religion' => $req->religion,
+                'citizenship' => $req->citizenship,
+                'married' => $req->married,
+                'job' => $req->job,
+                'father_name' => $req->father_name,
+                'mother_name' => $req->mother_name,
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('population.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    } 
+
+    public function population_destroy($id) {
+        try {   
+            $check = DB::table('population')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('Population not found');
+                return back();
+            }
+
+            DB::table('population')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('population.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
     }
     // Facility
     public function facility_index() {

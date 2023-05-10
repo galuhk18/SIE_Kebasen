@@ -33,6 +33,11 @@
             <span>Executive</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('population.index') }}">
+            <i class="fas fa-users"></i>
+            <span>Population</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('facility.index') }}">
             <i class="fas fa-building"></i>
             <span>Facility</span></a>
