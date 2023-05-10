@@ -37,6 +37,17 @@
             <i class="fas fa-users"></i>
             <span>Population</span></a>
     </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('birth.index') }}">
+            <i class="fas fa-baby-carriage"></i>
+            <span>Birth</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('death.index') }}">
+            <i class="fas fa-book-dead"></i>
+            <span>Death</span></a>
+    </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('facility.index') }}">
             <i class="fas fa-building"></i>

@@ -40,6 +40,24 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'population_update'])->name('population.update');
         Route::get('/destroy/{id}', [AdminController::class,'population_destroy'])->name('population.destroy');
     });
+    // Birth
+    Route::prefix('birth')->group(function () {
+        Route::get('/', [AdminController::class,'birth_index'])->name('birth.index');
+        Route::get('/create', [AdminController::class,'birth_create'])->name('birth.create');
+        Route::post('/create', [AdminController::class,'birth_store'])->name('birth.store');
+        Route::get('/edit/{id}', [AdminController::class,'birth_edit'])->name('birth.edit');
+        Route::put('/edit/{id}', [AdminController::class,'birth_update'])->name('birth.update');
+        Route::get('/destroy/{id}', [AdminController::class,'birth_destroy'])->name('birth.destroy');
+    });
+    // Death
+    Route::prefix('death')->group(function () {
+        Route::get('/', [AdminController::class,'death_index'])->name('death.index');
+        Route::get('/create', [AdminController::class,'death_create'])->name('death.create');
+        Route::post('/create', [AdminController::class,'death_store'])->name('death.store');
+        Route::get('/edit/{id}', [AdminController::class,'death_edit'])->name('death.edit');
+        Route::put('/edit/{id}', [AdminController::class,'death_update'])->name('death.update');
+        Route::get('/destroy/{id}', [AdminController::class,'death_destroy'])->name('death.destroy');
+    });
     // Facility
     Route::prefix('facility')->group(function () {
         Route::get('/', [AdminController::class,'facility_index'])->name('facility.index');

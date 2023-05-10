@@ -159,6 +159,144 @@ class AdminController extends Controller
             return back();
         }
     }
+
+    // Birth
+    public function birth_index() {
+        $data['birth'] = DB::table('birth')->get();
+        return view('admin.birth.index', $data);
+    }
+
+    public function birth_create() {
+        $data['gender'] = Config::get('enums.gender');
+        return view('admin.birth.create', $data);
+    }
+
+    public function birth_store(Request $req) {
+        $req->validate([
+            'nik' => 'required',
+            'name' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'date_of_birth' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+        ]);
+
+        try {
+            //code...
+            DB::table('birth')->insert([
+                'nik' => $req->nik,
+                'name' => $req->name,
+                'gender' => $req->gender,
+                'address' => $req->address,
+                'date_of_birth' => $req->date_of_birth,
+                'father_name' => $req->father_name,
+                'mother_name' => $req->mother_name,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('birth.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function birth_edit($id) {
+        $data['birth'] = DB::table('birth')
+                            ->where('id', $id)
+                            ->first();
+        $data['gender'] = Config::get('enums.gender');
+        return view('admin.birth.edit', $data);
+    }
+
+    public function birth_update(Request $req, $id) {
+        $req->validate([
+            'nik' => 'required',
+            'name' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'date_of_birth' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+        ]);
+
+        try {
+            //code...
+            DB::table('birth')
+            ->where('id', $id)
+            ->update([
+                'nik' => $req->nik,
+                'name' => $req->name,
+                'gender' => $req->gender,
+                'address' => $req->address,
+                'date_of_birth' => $req->date_of_birth,
+                'father_name' => $req->father_name,
+                'mother_name' => $req->mother_name,
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('birth.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function birth_destroy($id) {
+        try {   
+            $check = DB::table('birth')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('Birth not found');
+                return back();
+            }
+
+            DB::table('birth')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('birth.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    // Death
+    public function death_index() {
+
+    }
+
+    public function death_create() {
+
+    }
+
+    public function death_store(Request $req) {
+
+    }
+
+    public function death_edit($id) {
+
+    }
+
+    public function death_update(Request $req) {
+
+    }
+
+    public function death_destroy($id) {
+        
+    }
+
     // Facility
     public function facility_index() {
         $data['facility'] = DB::table('facility')->get();
