@@ -6,9 +6,9 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Edit Birth</h6>
+        <h6>Edit Death</h6>
         <hr>
-        <form action="{{ route('birth.update', ['id' => $birth->id]) }}" method="post">
+        <form action="{{ route('death.update', ['id' => $death->id]) }}" method="post">
             @method('PUT')
             @csrf
             <div class="row">
@@ -16,7 +16,7 @@
 
                     <div class="form-group">
                         <label for="nik">NIK</label>
-                        <input type="text" name="nik" class="form-control" value="{{ $birth->nik }}">
+                        <input type="text" name="nik" class="form-control" value="{{ $death->nik }}">
                         @error('nik')
                             <div class="text-danger">
                                 {{ $message }}
@@ -24,11 +24,21 @@
                         @enderror
                     </div>
 
-                    
+                    <div class="form-group">
+                        <label for="family_card">Family Card</label>
+                        <input type="text" name="family_card" class="form-control" value="{{ $death->family_card }}">
+                        @error('family_card')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                   
 
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ $birth->name }}">
+                        <input type="text" name="name" class="form-control" value="{{ $death->name }}">
                         @error('name')
                             <div class="text-danger">
                                 {{ $message }}
@@ -37,26 +47,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="gender" class="d-block">Gender</label>
-                        @foreach($gender as $ge)
-
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline{{ $ge }}" name="gender"
-                                    class="custom-control-input" value="{{ $ge }}" {{ ($ge == $birth->gender) ? 'checked' : '' }}>
-                                <label class="custom-control-label"
-                                    for="customRadioInline{{ $ge }}">{{ Str::ucfirst($ge) }}</label>
-                            </div>
-                        @endforeach
-                        @error('gender')
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
                         <label for="address">Address</label>
-                        <textarea name="address" class="form-control">{{ $birth->address }}</textarea>
+                        <textarea name="address" class="form-control">{{ $death->address }}</textarea>
                         @error('address')
                             <div class="text-danger">
                                 {{ $message }}
@@ -64,37 +56,19 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label for="date_of_birth">Date of Birth</label>
-                        <input type="date" name="date_of_birth" class="form-control" value="{{ $birth->date_of_birth }}">
-                        @error('date_of_birth')
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+                   
 
                     
+
 
                 </div>
 
                 <div class="col-lg-6">
-
-                    <div class="form-group">
-                        <label for="date_of_birth">Date of Birth</label>
-                        <input type="date" name="date_of_birth" class="form-control" value="{{ $birth->date_of_birth }}">
-                        @error('date_of_birth')
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
                     
                     <div class="form-group">
-                        <label for="father_name">Father Name</label>
-                        <input type="text" name="father_name" class="form-control" value="{{ $birth->father_name }}">
-                        @error('father_name')
+                        <label for="date_of_death">Date of death</label>
+                        <input type="date" name="date_of_death" class="form-control" value="{{ $death->date_of_death }}">
+                        @error('date_of_death')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>
@@ -102,9 +76,19 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mother_name">Mother Name</label>
-                        <input type="text" name="mother_name" class="form-control" value="{{ $birth->mother_name }}">
-                        @error('mother_name')
+                        <label for="informer">Informer</label>
+                        <input type="text" name="informer" class="form-control" value="{{ $death->informer }}">
+                        @error('informer')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="informer_status">Informer Status</label>
+                        <input type="text" name="informer_status" class="form-control" value="{{ $death->informer_status }}">
+                        @error('informer_status')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>

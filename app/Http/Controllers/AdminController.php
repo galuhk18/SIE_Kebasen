@@ -279,23 +279,107 @@ class AdminController extends Controller
     }
 
     public function death_create() {
-
+        return view('admin.death.create');
     }
 
     public function death_store(Request $req) {
+        $req->validate([
+            'nik' => 'required',
+            'family_card' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'date_of_death' => 'required',
+            'informer' => 'required',
+            'informer_status' => 'required',
+        ]);
 
+        try {
+            //code...
+            DB::table('death')->insert([
+                'nik' => $req->nik,
+                'family_card' => $req->family_card,
+                'name' => $req->name,
+                'address' => $req->address,
+                'date_of_death' => $req->date_of_death,
+                'informer' => $req->informer,
+                'informer_status' => $req->informer_status,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('death.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
     }
 
     public function death_edit($id) {
-
+        $data['death'] = DB::table('death')
+                        ->where('id', $id)
+                        ->first();
+        return view('admin.death.edit', $data);
     }
 
-    public function death_update(Request $req) {
+    public function death_update(Request $req, $id) {
+        $req->validate([
+            'nik' => 'required',
+            'family_card' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'date_of_death' => 'required',
+            'informer' => 'required',
+            'informer_status' => 'required',
+        ]);
 
+        try {
+            //code...
+            DB::table('death')
+                ->where('id', $id)
+                ->update([
+                'nik' => $req->nik,
+                'family_card' => $req->family_card,
+                'name' => $req->name,
+                'address' => $req->address,
+                'date_of_death' => $req->date_of_death,
+                'informer' => $req->informer,
+                'informer_status' => $req->informer_status,
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('death.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
     }
 
     public function death_destroy($id) {
-        
+        try {   
+            $check = DB::table('death')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('Death not found');
+                return back();
+            }
+
+            DB::table('death')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('death.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
     }
 
     // Facility

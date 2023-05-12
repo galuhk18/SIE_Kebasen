@@ -6,9 +6,9 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Birth</h6>
+        <h6>Add New Death</h6>
         <hr>
-        <form action="{{ route('birth.store') }}" method="post">
+        <form action="{{ route('death.store') }}" method="post">
             @csrf
             <div class="row">
                 <div class="col-lg-6">
@@ -23,30 +23,22 @@
                         @enderror
                     </div>
 
-                   
-
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control">
-                        @error('name')
+                        <label for="family_card">Family Card</label>
+                        <input type="text" name="family_card" class="form-control">
+                        @error('family_card')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label for="gender" class="d-block">Gender</label>
-                        @foreach($gender as $ge)
+                   
 
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline{{ $ge }}" name="gender"
-                                    class="custom-control-input" value="{{ $ge }}">
-                                <label class="custom-control-label"
-                                    for="customRadioInline{{ $ge }}">{{ Str::ucfirst($ge) }}</label>
-                            </div>
-                        @endforeach
-                        @error('gender')
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control">
+                        @error('name')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>
@@ -73,9 +65,9 @@
                 <div class="col-lg-6">
                     
                     <div class="form-group">
-                        <label for="date_of_birth">Date of Birth</label>
-                        <input type="date" name="date_of_birth" class="form-control">
-                        @error('date_of_birth')
+                        <label for="date_of_death">Date of death</label>
+                        <input type="date" name="date_of_death" class="form-control">
+                        @error('date_of_death')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>
@@ -83,9 +75,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="father_name">Father Name</label>
-                        <input type="text" name="father_name" class="form-control">
-                        @error('father_name')
+                        <label for="informer">Informer</label>
+                        <input type="text" name="informer" class="form-control">
+                        @error('informer')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>
@@ -93,9 +85,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mother_name">Mother Name</label>
-                        <input type="text" name="mother_name" class="form-control">
-                        @error('mother_name')
+                        <label for="informer_status">Informer Status</label>
+                        <input type="text" name="informer_status" class="form-control">
+                        @error('informer_status')
                             <div class="text-danger">
                                 {{ $message }}
                             </div>
