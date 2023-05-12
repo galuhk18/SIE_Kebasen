@@ -67,6 +67,15 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'facility_update'])->name('facility.update');
         Route::get('/destroy/{id}', [AdminController::class,'facility_destroy'])->name('facility.destroy');
     });
+    // Activity
+    Route::prefix('activity')->group(function () {
+        Route::get('/', [AdminController::class,'activity_index'])->name('activity.index');
+        Route::get('/create', [AdminController::class,'activity_create'])->name('activity.create');
+        Route::post('/create', [AdminController::class,'activity_store'])->name('activity.store');
+        Route::get('/edit/{id}', [AdminController::class,'activity_edit'])->name('activity.edit');
+        Route::put('/edit/{id}', [AdminController::class,'activity_update'])->name('activity.update');
+        Route::get('/destroy/{id}', [AdminController::class,'activity_destroy'])->name('activity.destroy');
+    });
     // User admin
     Route::prefix('user/admin')->group(function () {
         Route::get('/', [AdminController::class,'user_admin_index'])->name('user.admin.index');

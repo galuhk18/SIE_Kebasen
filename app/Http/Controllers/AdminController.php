@@ -476,6 +476,104 @@ class AdminController extends Controller
         }
     }
 
+    // Decision
+
+    // Service
+
+    // Activity
+    public function activity_index() {
+        $data['activity'] = DB::table('activity')->get();
+        return view('admin.activity.index', $data);
+    }
+
+    public function activity_create() {
+        return view('admin.activity.create');
+    }
+
+    public function activity_store(Request $req) {
+        $req->validate([
+            'name' => 'required',
+            'date_of_activity' => 'required',
+            'address' => 'required',
+            'information' => 'required',
+        ]);
+        try {
+    
+            DB::table('activity')->insert([
+                'name' => $req->name,
+                'date_of_activity' => $req->date_of_activity,
+                'address' => $req->address,
+                'information' => $req->information,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('activity.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function activity_edit($id) {
+        $data['activity'] = DB::table('activity')
+                            ->where('id', $id)
+                            ->first();
+        return view('admin.activity.edit', $data);
+    }
+
+    public function activity_update(Request $req, $id) {
+        $req->validate([
+            'name' => 'required',
+            'date_of_activity' => 'required',
+            'address' => 'required',
+            'information' => 'required',
+        ]);
+        try {
+    
+            DB::table('activity')
+            ->where('id', $id)    
+            ->update([
+                'name' => $req->name,
+                'date_of_activity' => $req->date_of_activity,
+                'address' => $req->address,
+                'information' => $req->information,
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('activity.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function activity_destroy($id) {
+        try {   
+            $check = DB::table('activity')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('Activity not found');
+                return back();
+            }
+
+            DB::table('activity')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('activity.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
     // User Admin
     public function user_admin_index() {
         $data['admin'] = DB::table('admin')->get();

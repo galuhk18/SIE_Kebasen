@@ -54,6 +54,11 @@
             <span>Facility</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('activity.index') }}">
+            <i class="fas fa-walking"></i>
+            <span>Activity</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('user.admin.index') }}">
             <i class="fas fa-users"></i>
             <span>Admin</span></a>
