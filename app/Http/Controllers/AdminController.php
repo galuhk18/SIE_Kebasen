@@ -479,7 +479,105 @@ class AdminController extends Controller
     // Decision
 
     // Service
+    public function service_index() {
+        $data['service'] = DB::table('service')->get();
+        
+        return view('admin.service.index', $data);
+    }
 
+    public function service_create() {
+        $data['service_type'] =  Config::get('enums.service_type');
+        return view('admin.service.create', $data);
+    }
+
+    public function service_store(Request $req) {
+        $req->validate([
+            'nik' => 'required',
+            'name' => 'required',
+            'date_of_service' => 'required',
+            'information' => 'required',
+            'service_type' => 'required',
+        ]);
+        try {
+    
+            DB::table('service')->insert([
+                'nik' => $req->nik,
+                'name' => $req->name,
+                'date_of_service' => $req->date_of_service,
+                'information' => $req->information,
+                'service_type' => $req->service_type,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('service.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function service_edit($id) {
+        $data['service'] = DB::table('service')
+                            ->where('id', $id)
+                            ->first();
+        $data['service_type'] =  Config::get('enums.service_type');
+        return view('admin.service.edit', $data);
+    }
+
+    public function service_update(Request $req, $id) {
+        $req->validate([
+            'nik' => 'required',
+            'name' => 'required',
+            'date_of_service' => 'required',
+            'information' => 'required',
+            'service_type' => 'required',
+        ]);
+        try {
+    
+            DB::table('service')
+            ->where('id', $id)    
+            ->update([
+                'nik' => $req->nik,
+                'name' => $req->name,
+                'date_of_service' => $req->date_of_service,
+                'information' => $req->information,
+                'service_type' => $req->service_type,
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('service.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function service_destroy($id) {
+        try {   
+            $check = DB::table('service')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('Service not found');
+                return back();
+            }
+
+            DB::table('service')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('service.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // Activity
     public function activity_index() {
         $data['activity'] = DB::table('activity')->get();

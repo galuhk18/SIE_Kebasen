@@ -1,10 +1,10 @@
-<ul class="navbar-nav bg-danger sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-side sidebar sidebar-light accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
         <div class="sidebar-brand-icon">
            
-           <i class="fa fa-building"></i>
+           <img width="50px" src="{{ asset('assets/img/logo-bms.png') }}" alt="logo">
         </div>
         <div class="sidebar-brand-text mx-3">
            {{env('APP_NAME')}}
@@ -35,24 +35,33 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('population.index') }}">
             <i class="fas fa-users"></i>
-            <span>Population</span></a>
+            <span>Data Warga Penduduk</span></a>
+    </li>
+
+
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-file-alt"></i>
+            <span>Data Penduduk</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('birth.index') }}">Data Kelahiran</a>
+                <a class="collapse-item" href="{{ route('death.index') }}">Data Kematian</a>
+                <a class="collapse-item" href="{{ route('service.index') }}">Data Layanan</a>
+            </div>
+        </div>
     </li>
     
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('birth.index') }}">
-            <i class="fas fa-baby-carriage"></i>
-            <span>Birth</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('death.index') }}">
-            <i class="fas fa-book-dead"></i>
-            <span>Death</span></a>
-    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('facility.index') }}">
             <i class="fas fa-building"></i>
             <span>Facility</span></a>
     </li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('activity.index') }}">
             <i class="fas fa-walking"></i>

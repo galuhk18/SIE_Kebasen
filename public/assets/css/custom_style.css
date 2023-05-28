@@ -32,3 +32,26 @@
     color: #000;
     background-color: rgba(255, 255, 255, 0.5) !important;
 }
+
+.bg-side {
+  background: linear-gradient(180deg, #83BAB5 50%, #FFF  120.3%);
+}
+.nav-item a {
+  color: #222 !important;
+}
+
+.nav-item a i {
+  color: #222 !important;
+}
+
+.nav-item a:hover {
+  font-weight: 900 !important;
+}
+
+.sidebar .nav-item .nav-link[data-toggle=collapse].collapsed::after {
+  color: #222 !important;
+}
+
+.sidebar-light .nav-item .nav-link[data-toggle=collapse]::after {
+  color: #222 !important;
+}

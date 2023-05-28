@@ -16,7 +16,7 @@ class CreateDecision extends Migration
         Schema::create('decision', function (Blueprint $table) {
             $table->id();
             $table->string('decision');
-            $table->string('tye_of_decision');
+            $table->string('type_of_decision');
             $table->date('decision_date');
             $table->text('problem');
             $table->text('documentasion');
