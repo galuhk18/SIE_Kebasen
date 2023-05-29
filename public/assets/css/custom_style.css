@@ -46,6 +46,7 @@
 
 .nav-item a:hover {
   font-weight: 900 !important;
+  transition: 0.5s;
 }
 
 .sidebar .nav-item .nav-link[data-toggle=collapse].collapsed::after {

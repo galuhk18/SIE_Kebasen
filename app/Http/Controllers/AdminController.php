@@ -672,6 +672,176 @@ class AdminController extends Controller
         }
     }
 
+    // User Executive
+    public function user_executive_index() {
+        $data['executive'] = DB::table('executive')->get();
+        return view('admin.user-executive.index', $data);
+    }
+
+    public function user_executive_create() {
+        
+        return view('admin.user-executive.create');
+    }
+
+    public function user_executive_store(Request $req) {
+        $req->validate([
+            'name' => 'required',
+            'username' => 'required|unique:executive,username',
+            'email' => 'required|email|unique:executive,email',
+            'phone_number' => 'required',
+            'picture' => 'max:1000|file|image',
+            'password' => 'required|same:password_confirm',
+            'password_confirm' => 'required|same:password',
+            'address' => 'required',
+        ]);
+        try {
+            if($req->hasFile('picture')) {
+                $extFile = $req->picture->getClientOriginalExtension();
+                $namaFile = 'executive-'.time().".".$extFile;
+                $path = $req->picture->move('img/executive', $namaFile);
+                $exe = [
+                    'name' => $req->name,
+                    'username' => $req->username,
+                    'email' => $req->email,
+                    'phone_number' => $req->phone_number,
+                    'password' => Hash::make($req->password),
+                    'address' => $req->address,
+                    'picture' => $path,
+                    'created_at' => Carbon::now()
+                ];
+            } else {
+                $exe = [
+                    'name' => $req->name,
+                    'username' => $req->username,
+                    'email' => $req->email,
+                    'phone_number' => $req->phone_number,
+                    'password' => Hash::make($req->password),
+                    'address' => $req->address,
+                    'created_at' => Carbon::now()
+                ];
+            } 
+            DB::table('executive')->insert($exe);
+
+            Alert::success('Success');
+
+            return redirect(route('user.executive.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function user_executive_edit($id) {
+        $data['executive'] = DB::table('executive')
+                            ->where('id', $id)
+                            ->first();
+        return view('admin.user-executive.edit', $data);
+    }
+
+    public function user_executive_update(Request $req, $id) {
+        $req->validate([
+            'name' => 'required',
+            'username' => 'required|unique:executive,username,'.$id.',id',
+            'email' => 'required|email|unique:executive,email,'.$id.',id',
+            'phone_number' => 'required',
+            'address' => 'required',
+        ]);
+        try {
+
+            if($req->hasFile('picture')) {
+
+                
+
+                $extFile = $req->picture->getClientOriginalExtension();
+                $namaFile = 'executive-'.time().".".$extFile;
+                $path = $req->picture->move('img/executive', $namaFile);
+                $exe = [
+                    'name' => $req->name,
+                    'username' => $req->username,
+                    'email' => $req->email,
+                    'phone_number' => $req->phone_number,
+                    'address' => $req->address,
+                    'picture' => $path,
+                    'created_at' => Carbon::now()
+                ];
+            } else {
+                $exe = [
+                    'name' => $req->name,
+                    'username' => $req->username,
+                    'email' => $req->email,
+                    'phone_number' => $req->phone_number,
+                    'address' => $req->address,
+                    'updated_at' => Carbon::now()
+                ];
+            }
+    
+            DB::table('executive')
+            ->where('id', $id)
+            ->update($exe);
+
+            Alert::success('Success');
+
+            return redirect(route('user.executive.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function user_executive_pass($id) {
+        $data['executive'] = DB::table('executive')
+                            ->where('id', $id)
+                            ->first();
+        return view('admin.user-executive.pass', $data);
+    }
+
+    public function user_executive_pass_act(Request $req, $id) {
+        $req->validate([
+            'password' => 'required|same:password_confirm',
+            'password_confirm' => 'required|same:password',
+        ]);
+        try {
+    
+            DB::table('executive')
+            ->where('id', $id)
+            ->update([
+               
+                'password' => Hash::make($req->password),
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('user.executive.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function user_executive_destroy($id) {
+        try {
+    
+            $check = DB::table('executive')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('User executive not found');
+                return back();
+            }
+
+            DB::table('executive')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('user.executive.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // User Admin
     public function user_admin_index() {
         $data['admin'] = DB::table('admin')->get();
@@ -738,7 +908,6 @@ class AdminController extends Controller
                 'username' => $req->username,
                 'email' => $req->email,
                 'phone_number' => $req->phone_number,
-                'password' => Hash::make($req->password),
                 'address' => $req->address,
                 'updated_at' => Carbon::now()
             ]);
@@ -805,5 +974,13 @@ class AdminController extends Controller
             Alert::error($e->getMessage());
             return back();
         }
+    }
+
+    public function user_admin_profile() {
+        $id = session('admin_id');
+        $data['profile'] = DB::table('admin')
+                        ->where('id', $id)
+                        ->first();
+        return view('admin.user-admin.profile', $data);
     }
 }

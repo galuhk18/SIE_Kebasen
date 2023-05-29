@@ -12,7 +12,13 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 
-                <span class="mr-2 d-none d-lg-inline text-dark small"></span>
+                @if (session()->has('admin_id'))
+                    @php
+                        $user_admin = DB::table('admin')->where('id', session('admin_id'))->first();
+                    @endphp
+                @endif
+
+                <span class="mr-2 d-none d-lg-inline text-dark">Hi, {{ $user_admin->name }} </span>
                
                     <i class="fa fa-user text-dark"></i>
             </a>
@@ -21,7 +27,7 @@
                 aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                   User
+                    {{ $user_admin->username }}
                 </a>
 
 

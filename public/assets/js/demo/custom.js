@@ -9,7 +9,17 @@ function readURL(input) {
     }
 }
 
+if($('#img-preview').attr('src')) {
+
+    $('#img-preview').show();
+} else {
+
+    $('#img-preview').hide();
+}
+
+
  $("#form-file").change(function() {
+    $('#img-preview').show();
      readURL(this);
      let nameFile = $(this).val();
      $(".custom-file-label").html(nameFile);

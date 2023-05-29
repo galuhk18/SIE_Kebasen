@@ -85,6 +85,17 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'activity_update'])->name('activity.update');
         Route::get('/destroy/{id}', [AdminController::class,'activity_destroy'])->name('activity.destroy');
     });
+    // User Executive
+    Route::prefix('user/executive')->group(function () {
+        Route::get('/', [AdminController::class,'user_executive_index'])->name('user.executive.index');
+        Route::get('/create', [AdminController::class,'user_executive_create'])->name('user.executive.create');
+        Route::post('/create', [AdminController::class,'user_executive_store'])->name('user.executive.store');
+        Route::get('/edit/{id}', [AdminController::class,'user_executive_edit'])->name('user.executive.edit');
+        Route::put('/edit/{id}', [AdminController::class,'user_executive_update'])->name('user.executive.update');
+        Route::get('/pass/{id}', [AdminController::class,'user_executive_pass'])->name('user.executive.pass');
+        Route::put('/pass/{id}', [AdminController::class,'user_executive_pass_act'])->name('user.executive.pass.act');
+        Route::get('/destroy/{id}', [AdminController::class,'user_executive_destroy'])->name('user.executive.destroy');
+    });
     // User admin
     Route::prefix('user/admin')->group(function () {
         Route::get('/', [AdminController::class,'user_admin_index'])->name('user.admin.index');
@@ -95,5 +106,6 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/pass/{id}', [AdminController::class,'user_admin_pass'])->name('user.admin.pass');
         Route::put('/pass/{id}', [AdminController::class,'user_admin_pass_act'])->name('user.admin.pass.act');
         Route::get('/destroy/{id}', [AdminController::class,'user_admin_destroy'])->name('user.admin.destroy');
+        Route::get('/profile', [AdminController::class,'user_admin_profile'])->name('user.admin.profile');
     });
 });

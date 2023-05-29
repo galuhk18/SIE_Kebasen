@@ -21,17 +21,16 @@
             <span>Dashboard</span></a>
     </li>
 
-    <hr class="sidebar-divider my-0">
+    <hr class="sidebar-divider">
 
 
 
-    <hr class="sidebar-divider my-0">
+ 
 
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-user-secret"></i>
-            <span>Executive</span></a>
-    </li>
+    <div class="sidebar-heading text-dark">
+        Master
+    </div>
+    
     <li class="nav-item">
         <a class="nav-link" href="{{ route('population.index') }}">
             <i class="fas fa-users"></i>
@@ -55,23 +54,40 @@
         </div>
     </li>
     
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('activity.index') }}">
+            <i class="fas fa-calendar"></i>
+            <span>Jadwal Kegiatan</span></a>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('facility.index') }}">
             <i class="fas fa-building"></i>
             <span>Facility</span></a>
     </li>
-
+    
+    <div class="sidebar-heading text-dark">
+        Profile
+    </div>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('activity.index') }}">
-            <i class="fas fa-walking"></i>
-            <span>Activity</span></a>
+        <a class="nav-link" href="{{ route('user.executive.index') }}">
+            <i class="fas fa-user-secret"></i>
+            <span>Executive</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.admin.index') }}">
             <i class="fas fa-users"></i>
             <span>Admin</span></a>
     </li>
+    @if (session()->has('admin_id'))
+        
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('user.admin.profile') }}">
+            <i class="fa fa-user-circle"></i>
+            <span>Profile Saya</span>
+        </a>
+    </li>
+    @endif
 
     <hr class="sidebar-divider my-0">
 

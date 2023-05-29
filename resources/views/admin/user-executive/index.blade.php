@@ -1,15 +1,15 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME')  }} | User Admin</title>
+    <title>{{ env('APP_NAME')  }} | User Executive</title>
 @endsection
 @section('content')
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
-                <h6>Data Admin</h6>
-                <a href="{{ route('user.admin.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <h6>Data Executive</h6>
+                <a href="{{ route('user.executive.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
             </div>
             <hr>
             <div class="table-responsive">
@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($admin as $item)
+                        @foreach ($executive as $item)
                             
                         <tr>
                             <td class="text-center">{{ $item->name }}</td>
@@ -38,11 +38,9 @@
                             <td class="text-center">{{ $item->created_at }}</td>
                             <td class="text-center">{{ $item->updated_at }}</td>
                             <td class="text-center">
-                                <a href="{{ route('user.admin.edit', ['id' => $item->id]) }}" class="btn-info btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ route('user.admin.pass', ['id' => $item->id]) }}" class="btn-warning btn-sm"><i class="fa fa-lock"></i></a>
-                                @if (session('admin_id') !== $item->id)
-                                <a href="{{ route('user.admin.destroy',['id' => $item->id]) }}" class="btn-danger btn-sm delete-confirm"><i class="fa fa-trash"></i></a>
-                                @endif
+                                <a href="{{ route('user.executive.edit', ['id' => $item->id]) }}" class="btn-info btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="{{ route('user.executive.pass', ['id' => $item->id]) }}" class="btn-warning btn-sm"><i class="fa fa-lock"></i></a>
+                                <a href="{{ route('user.executive.destroy',['id' => $item->id]) }}" class="btn-danger btn-sm delete-confirm"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach
