@@ -9,6 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo-bms.png') }}" type="image/x-icon">
+
+
     @yield('title')
 
     <!-- Custom fonts for this template-->

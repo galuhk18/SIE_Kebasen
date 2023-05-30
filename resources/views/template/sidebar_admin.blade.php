@@ -76,7 +76,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.admin.index') }}">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-user"></i>
             <span>Admin</span></a>
     </li>
     @if (session()->has('admin_id'))

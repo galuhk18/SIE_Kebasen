@@ -57,4 +57,41 @@ class AuthController extends Controller
             return redirect(route('auth.admin.login'));
         }
     }
+
+    public function executive_login() {
+        return view('auth.executive-login');
+    }
+
+    public function executive_login_validation(Request $req) {
+        $req->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        try {
+            //code...
+            $checkUser = DB::table('executive')
+                            ->where('email', $req->email)
+                            ->orWhere('username', $req->email)
+                            ->first();
+            if(!$checkUser) {
+                Alert::error('Email not registered');
+                return back();
+            }
+
+            if(!Hash::check($req->password, $checkUser->password)) {
+                Alert::error('Password Wrong');
+                return back();
+            }
+
+            session([
+                'executive_id' => $checkUser->id
+            ]);
+
+            return redirect(route('admin.index'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
 }

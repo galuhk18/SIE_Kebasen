@@ -16,7 +16,7 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if(session()->has('admin_id')) {
+        if(session()->has('admin_id') || session()->has('executive_id')) {
 
             return $next($request);
         } else {

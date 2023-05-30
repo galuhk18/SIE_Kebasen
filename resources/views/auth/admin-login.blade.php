@@ -12,16 +12,17 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-danger">
+                            <div class="col-lg-6 d-none d-lg-block bg-side">
                                 
                                 <div class="text-white d-flex align-items-center justify-content-center" style="height: 500px;">
-                                    <i class="fa fa-building" style="font-size: 50px;"></i>
+                                   <img src="{{ asset('assets/img/logo-bms.png') }}" width="100px" alt="">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
-                                    <div class="text-center mb-5">
-                                        <h1 class="h4 text-gray-900">{{ env('APP_NAME') }} | Login</h1>
+                                    <div class="text-center">
+                                        <h1 class="font-weight-bold text-gray-900">{{ env('APP_NAME') }}</h1>
+                                        <h6 class="">Login Admin</h6>
                                     </div>
                                     <hr>
                                     <form class="user" action="{{ route('auth.admin.login.validation') }}" method="POST">
@@ -43,7 +44,7 @@
                                             @enderror
                                         </div>
                                         
-                                        <button type="submit" class="btn btn-danger btn-user btn-block">
+                                        <button type="submit" class="btn btn-info btn-user btn-block">
                                             Login
                                         </button>
                                        
