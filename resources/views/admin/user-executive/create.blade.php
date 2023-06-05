@@ -8,7 +8,8 @@
     <div class="card-body">
         <h6>Add New Executive</h6>
         <hr>
-        <form action="{{ route('user.executive.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('user.executive.store') }}" method="post"
+            enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-lg-6">
@@ -42,17 +43,17 @@
                         @enderror
                     </div>
 
-                    
+
 
 
                     <div class="form-group">
                         <label for="picture">Picture</label>
                         <br>
                         <img id="img-preview" width="200px" class="img-thumbnail mb-2" alt="">
-    
+
                         <input type="file" class="form-control" id="form-file" name="picture">
                         @error('picture')
-                        <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -99,7 +100,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                
+
                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>
             </div>
         </form>

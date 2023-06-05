@@ -54,7 +54,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" data-display="static" aria-expanded="false">Login</a>
                     <div class="dropdown-menu dropdown-menu-lg-right">
                       <a class="dropdown-item" href="{{ route('auth.admin.login') }}">Login Admin</a>
-                      <a class="dropdown-item" href="#">Login Executive</a>
+                      <a class="dropdown-item" href="{{ route('auth.executive.login') }}">Login Executive</a>
                     </div>
                 </li>
                 

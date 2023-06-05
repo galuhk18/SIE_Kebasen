@@ -23,6 +23,11 @@
             'Surat keterangan kepemilikan tanah',
             'Surat keterangan jaminan rumah',
             'Keterangan ahli waris'
+        ],
+        'funding_petition_status' => [
+            'waiting_approval',
+            'approval',
+            'rejected'
         ]
     ];
 ?>

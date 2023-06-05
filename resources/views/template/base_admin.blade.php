@@ -98,7 +98,15 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    @if (session()->has('admin_id'))
+                        
                     <a class="btn btn-danger" href="{{ route('auth.admin.logout') }}">Logout</a>
+                    @endif
+
+                    @if (session()->has('executive_id'))
+                        
+                    <a class="btn btn-danger" href="{{ route('auth.executive.logout') }}">Logout</a>
+                    @endif
                 </div>
             </div>
         </div>

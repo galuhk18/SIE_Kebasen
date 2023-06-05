@@ -26,6 +26,10 @@ Route::prefix('auth')->group(function () {
     Route::get('/admin/login',[AuthController::class,'admin_login'])->name('auth.admin.login');
     Route::post('/admin/login',[AuthController::class,'admin_login_validation'])->name('auth.admin.login.validation');
     Route::get('/admin/logout',[AuthController::class,'admin_logout'])->name('auth.admin.logout');
+
+    Route::get('/executive/login',[AuthController::class,'executive_login'])->name('auth.executive.login');
+    Route::post('/executive/login',[AuthController::class,'executive_login_validation'])->name('auth.executive.login.validation');
+    Route::get('/executive/logout',[AuthController::class,'executive_logout'])->name('auth.executive.logout');
 }); 
 
 Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
@@ -58,6 +62,15 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'death_update'])->name('death.update');
         Route::get('/destroy/{id}', [AdminController::class,'death_destroy'])->name('death.destroy');
     });
+    // Decision
+    Route::prefix('decision')->group(function () {
+        Route::get('/', [AdminController::class,'decision_index'])->name('decision.index');
+        Route::get('/create', [AdminController::class,'decision_create'])->name('decision.create');
+        Route::post('/create', [AdminController::class,'decision_store'])->name('decision.store');
+        Route::get('/edit/{id}', [AdminController::class,'decision_edit'])->name('decision.edit');
+        Route::put('/edit/{id}', [AdminController::class,'decision_update'])->name('decision.update');
+        Route::get('/destroy/{id}', [AdminController::class,'decision_destroy'])->name('decision.destroy');
+    });
     // Facility
     Route::prefix('facility')->group(function () {
         Route::get('/', [AdminController::class,'facility_index'])->name('facility.index');
@@ -84,6 +97,15 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'activity_edit'])->name('activity.edit');
         Route::put('/edit/{id}', [AdminController::class,'activity_update'])->name('activity.update');
         Route::get('/destroy/{id}', [AdminController::class,'activity_destroy'])->name('activity.destroy');
+    });
+    // Funding Petition
+    Route::prefix('funding/petition')->group(function () {
+        Route::get('/', [AdminController::class,'funding_petition_index'])->name('funding.petition.index');
+        Route::get('/create', [AdminController::class,'funding_petition_create'])->name('funding.petition.create');
+        Route::post('/create', [AdminController::class,'funding_petition_store'])->name('funding.petition.store');
+        Route::get('/edit/{id}', [AdminController::class,'funding_petition_edit'])->name('funding.petition.edit');
+        Route::put('/edit/{id}', [AdminController::class,'funding_petition_update'])->name('funding.petition.update');
+        Route::get('/destroy/{id}', [AdminController::class,'funding_petition_destroy'])->name('funding.petition.destroy');
     });
     // User Executive
     Route::prefix('user/executive')->group(function () {

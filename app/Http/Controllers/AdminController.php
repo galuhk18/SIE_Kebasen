@@ -477,7 +477,140 @@ class AdminController extends Controller
     }
 
     // Decision
+    public function decision_index() {
+        $data['decision'] = DB::table('decision')->get();
+        
+        return view('admin.decision.index', $data);
+    }
 
+    public function decision_create() {
+        return view('admin.decision.create');
+    }
+
+    public function decision_store(Request $req) {
+        $req->validate([
+            'decision' => 'required',
+            'type_of_decision' => 'required',
+            'decision_date' => 'required',
+            'problem' => 'required',
+            'documentasion' => 'max:1000|file|image',
+            'realization_date' => 'required',
+        ]);
+        try {
+            if($req->hasFile('documentasion')) {
+                $extFile = $req->documentasion->getClientOriginalExtension();
+                $namaFile = 'decision-'.time().".".$extFile;
+                $path = $req->documentasion->move('img/decision', $namaFile);
+                
+                DB::table('decision')->insert([
+                    'decision' => $req->decision,
+                    'type_of_decision' => $req->type_of_decision,
+                    'decision_date' => $req->decision_date,
+                    'problem' => $req->problem,
+                    'documentasion' => $path,
+                    'realization_date' => $req->realization_date,
+                    'created_at' => Carbon::now()
+                ]);
+            } else {
+                DB::table('decision')->insert([
+                    'decision' => $req->decision,
+                    'type_of_decision' => $req->type_of_decision,
+                    'decision_date' => $req->decision_date,
+                    'problem' => $req->problem,
+                    'documentasion' => null,
+                    'realization_date' => $req->realization_date,
+                    'created_at' => Carbon::now()
+                ]);
+            }
+            
+
+            Alert::success('Success');
+
+            return redirect(route('decision.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function decision_edit($id) {
+        $data['decision'] = DB::table('decision')
+                            ->where('id', $id)
+                            ->first();
+        return view('admin.decision.edit', $data);
+    }
+
+    public function decision_update(Request $req, $id) {
+        $req->validate([
+            'decision' => 'required',
+            'type_of_decision' => 'required',
+            'decision_date' => 'required',
+            'problem' => 'required',
+            'documentasion' => 'max:1000|file|image',
+            'realization_date' => 'required',
+        ]);
+        try {
+    
+            if($req->hasFile('documentasion')) {
+                $extFile = $req->documentasion->getClientOriginalExtension();
+                $namaFile = 'decision-'.time().".".$extFile;
+                $path = $req->documentasion->move('img/decision', $namaFile);
+                
+                DB::table('decision')
+                ->where('id', $id)
+                ->update([
+                    'decision' => $req->decision,
+                    'type_of_decision' => $req->type_of_decision,
+                    'decision_date' => $req->decision_date,
+                    'problem' => $req->problem,
+                    'documentasion' => $path,
+                    'realization_date' => $req->realization_date,
+                    'updated_at' => Carbon::now()
+                ]);
+            } else {
+                DB::table('decision')
+                ->where('id', $id)
+                ->update([
+                    'decision' => $req->decision,
+                    'type_of_decision' => $req->type_of_decision,
+                    'decision_date' => $req->decision_date,
+                    'problem' => $req->problem,
+                    'realization_date' => $req->realization_date,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+
+            Alert::success('Success');
+
+            return redirect(route('decision.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function decision_destroy($id) {
+        try {   
+            $check = DB::table('decision')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('decision not found');
+                return back();
+            }
+
+            DB::table('decision')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('decision.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // Service
     public function service_index() {
         $data['service'] = DB::table('service')->get();
@@ -671,7 +804,132 @@ class AdminController extends Controller
             return back();
         }
     }
+    // Funding Petition
+    public function funding_petition_index() {
+        $data['funding_petition'] = DB::table('funding_petition')->get();
+        $data['funding_petition_status'] = Config::get('enums.funding_petition_status');
+        return view('admin.funding_petition.index', $data);
+    }
 
+    public function funding_petition_create() {
+        $data['funding_petition_status'] = Config::get('enums.funding_petition_status');
+        return view('admin.funding_petition.create', $data);
+    }
+
+    public function funding_petition_store(Request $req) {
+        $req->validate([
+            'date_of_activity' => 'required',
+            'organization_name' => 'required',
+            'budget_amount' => 'required',
+            'event_name' => 'required',
+            'person_responsible' => 'required',
+            'proposal' => 'required|max:1000|file|mimes:pdf|max:2048',
+        ]);
+        try {
+
+            $extFile = $req->proposal->getClientOriginalExtension();
+            $namaFile = 'proposal-'.time().".".$extFile;
+            $path = $req->proposal->move('pdf/funding_petition', $namaFile);
+    
+            DB::table('proposal')->insert([
+                'date_of_activity' => $req->date_of_activity,
+                'organization_name' => $req->organization_name,
+                'budget_amount' => $req->budget_amount,
+                'event_name' => $req->event_name,
+                'person_responsible' => $req->person_responsible,
+                'proposal' => $path,
+                'status' => 0,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('funding.petition.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function funding_petition_edit($id) {
+        $data['funding_petition'] = DB::table('funding_petition')
+                            ->where('id', $id)
+                            ->first();
+        $data['funding_petition_status'] = Config::get('enums.funding_petition_status');
+        return view('admin.activity.edit', $data);
+    }
+
+    public function funding_petition_update(Request $req, $id) {
+        $req->validate([
+            'date_of_activity' => 'required',
+            'organization_name' => 'required',
+            'budget_amount' => 'required',
+            'event_name' => 'required',
+            'person_responsible' => 'required',
+            'proposal' => 'max:1000|file|mimes:pdf|max:2048',
+            'status' => 'required'
+        ]);
+        try {
+
+            if($req->hasFile('proposal')) {
+                $extFile = $req->proposal->getClientOriginalExtension();
+                $namaFile = 'proposal-'.time().".".$extFile;
+                $path = $req->proposal->move('pdf/funding_petition', $namaFile);
+
+                DB::table('proposal')->insert([
+                    'date_of_activity' => $req->date_of_activity,
+                    'organization_name' => $req->organization_name,
+                    'budget_amount' => $req->budget_amount,
+                    'event_name' => $req->event_name,
+                    'person_responsible' => $req->person_responsible,
+                    'proposal' => $path,
+                    'status' => $req->status,
+                    'updated_at' => Carbon::now()
+                ]);
+            } else {
+
+                DB::table('proposal')->insert([
+                    'date_of_activity' => $req->date_of_activity,
+                    'organization_name' => $req->organization_name,
+                    'budget_amount' => $req->budget_amount,
+                    'event_name' => $req->event_name,
+                    'person_responsible' => $req->person_responsible,
+                    'status' => $req->status,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+    
+            Alert::success('Success');
+
+            return redirect(route('funding.petition.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function funding_petition_destroy($id) {
+        try {   
+            $check = DB::table('funding petition')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('funding petition not found');
+                return back();
+            }
+
+            DB::table('petition')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('funding.petition.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // User Executive
     public function user_executive_index() {
         $data['executive'] = DB::table('executive')->get();
@@ -745,6 +1003,7 @@ class AdminController extends Controller
             'email' => 'required|email|unique:executive,email,'.$id.',id',
             'phone_number' => 'required',
             'address' => 'required',
+            'picture' => 'max:1000|file|image',
         ]);
         try {
 

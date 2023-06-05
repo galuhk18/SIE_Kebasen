@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDecision extends Migration
+class CreateBuildingManagement extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateDecision extends Migration
      */
     public function up()
     {
-        Schema::create('decision', function (Blueprint $table) {
+        Schema::create('building_management', function (Blueprint $table) {
             $table->id();
-            $table->string('decision');
-            $table->string('type_of_decision');
-            $table->date('decision_date');
-            $table->text('problem');
-            $table->text('documentasion')->nullable();
-            $table->date('realization_date');
+            $table->string('building_code');
+            $table->string('building_name');
+            $table->string('condition');
+            $table->text('picture')->nullable();
+            $table->boolean('is_rental')->nullable()->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateDecision extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('decision');
+        Schema::dropIfExists('building_management');
     }
 }

@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Facility</h6>
+        <h6>Edit Facility</h6>
         <hr>
         <form action="{{ route('facility.update', ['id' => $facility->id]) }}" method="post">
             @method('PUT')

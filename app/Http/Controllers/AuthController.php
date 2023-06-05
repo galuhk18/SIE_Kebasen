@@ -94,4 +94,16 @@ class AuthController extends Controller
             return back();
         }
     }
+
+    public function executive_logout() {
+        try {
+            //code...
+            session()->flush();
+            return redirect(route('auth.executive.login'));
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return redirect(route('auth.admin.login'));
+        }
+    }
 }

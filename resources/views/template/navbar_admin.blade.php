@@ -16,18 +16,30 @@
                     @php
                         $user_admin = DB::table('admin')->where('id', session('admin_id'))->first();
                     @endphp
+                    <span class="mr-2 d-none d-lg-inline text-dark">Hi, {{ $user_admin->name }} </span>
                 @endif
-
-                <span class="mr-2 d-none d-lg-inline text-dark">Hi, {{ $user_admin->name }} </span>
+                
+                @if (session()->has('executive_id'))
+                    @php
+                        $user_executive = DB::table('executive')->where('id', session('executive_id'))->first();
+                    @endphp
+                    <span class="mr-2 d-none d-lg-inline text-dark">Hi, {{ $user_executive->name }} </span>
+                @endif
                
-                    <i class="fa fa-user text-dark"></i>
+                <i class="fa fa-user text-dark"></i>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    {{ $user_admin->username }}
+                    @if (session()->has('admin_id'))
+                        {{ $user_admin->username }}
+                    @endif
+
+                    @if (session()->has('executive_id'))
+                        {{ $user_executive->username }}
+                    @endif
                 </a>
 
 

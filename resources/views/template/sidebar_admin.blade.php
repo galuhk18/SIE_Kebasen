@@ -55,9 +55,28 @@
     </li>
     
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('decision.index') }}">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Data Keputusan</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('activity.index') }}">
             <i class="fas fa-calendar"></i>
             <span>Jadwal Kegiatan</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrga" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-user-friends"></i>
+            <span>Organisasi Desa</span>
+        </a>
+        <div id="collapseOrga" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('funding.petition.index') }}">Permohonan Dana</a>
+                <a class="collapse-item" href="">Laporan Kegiatan</a>
+                
+        </div>
     </li>
 
     <li class="nav-item">
