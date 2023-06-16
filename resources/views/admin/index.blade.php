@@ -2,7 +2,12 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h1>Beranda</h1>
+            @if (session()->has('admin_id'))
+                <div class="text-center">
+                    <h1>Administrator</h1>
+                    <p>{{ env('APP_NAME') }}</p>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

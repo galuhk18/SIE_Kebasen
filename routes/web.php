@@ -107,6 +107,33 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'funding_petition_update'])->name('funding.petition.update');
         Route::get('/destroy/{id}', [AdminController::class,'funding_petition_destroy'])->name('funding.petition.destroy');
     });
+    // Activity Report
+    Route::prefix('activity/report')->group(function () {
+        Route::get('/', [AdminController::class,'activity_report_index'])->name('activity.report.index');
+        Route::get('/create', [AdminController::class,'activity_report_create'])->name('activity.report.create');
+        Route::post('/create', [AdminController::class,'activity_report_store'])->name('activity.report.store');
+        Route::get('/edit/{id}', [AdminController::class,'activity_report_edit'])->name('activity.report.edit');
+        Route::put('/edit/{id}', [AdminController::class,'activity_report_update'])->name('activity.report.update');
+        Route::get('/destroy/{id}', [AdminController::class,'activity_report_destroy'])->name('activity.report.destroy');
+    });
+    // Building Management
+    Route::prefix('building/management')->group(function () {
+        Route::get('/', [AdminController::class,'building_management_index'])->name('building.management.index');
+        Route::get('/create', [AdminController::class,'building_management_create'])->name('building.management.create');
+        Route::post('/create', [AdminController::class,'building_management_store'])->name('building.management.store');
+        Route::get('/edit/{id}', [AdminController::class,'building_management_edit'])->name('building.management.edit');
+        Route::put('/edit/{id}', [AdminController::class,'building_management_update'])->name('building.management.update');
+        Route::get('/destroy/{id}', [AdminController::class,'building_management_destroy'])->name('building.management.destroy');
+    });
+    // Facility Management
+    Route::prefix('facility/management')->group(function () {
+        Route::get('/', [AdminController::class,'facility_management_index'])->name('facility.management.index');
+        Route::get('/create', [AdminController::class,'facility_management_create'])->name('facility.management.create');
+        Route::post('/create', [AdminController::class,'facility_management_store'])->name('facility.management.store');
+        Route::get('/edit/{id}', [AdminController::class,'facility_management_edit'])->name('facility.management.edit');
+        Route::put('/edit/{id}', [AdminController::class,'facility_management_update'])->name('facility.management.update');
+        Route::get('/destroy/{id}', [AdminController::class,'facility_management_destroy'])->name('facility.management.destroy');
+    });
     // User Executive
     Route::prefix('user/executive')->group(function () {
         Route::get('/', [AdminController::class,'user_executive_index'])->name('user.executive.index');

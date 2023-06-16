@@ -28,6 +28,11 @@
             'waiting_approval',
             'approval',
             'rejected'
+        ],
+        'activity_report_status' => [
+            'waiting_approval',
+            'approval',
+            'rejected'
         ]
     ];
 ?>

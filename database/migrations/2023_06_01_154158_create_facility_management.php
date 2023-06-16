@@ -19,7 +19,7 @@ class CreateFacilityManagement extends Migration
             $table->string('facility_name');
             $table->string('condition');
             $table->integer('stock');
-            $table->text('picutre')->nullable();
+            $table->text('picture')->nullable();
             $table->timestamps();
         });
     }

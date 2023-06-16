@@ -74,10 +74,25 @@
         <div id="collapseOrga" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('funding.petition.index') }}">Permohonan Dana</a>
-                <a class="collapse-item" href="">Laporan Kegiatan</a>
+                <a class="collapse-item" href="{{ route('activity.report.index') }}">Laporan Kegiatan</a>
                 
         </div>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaj" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-home"></i>
+            <span>Manajemen Gedung</span>
+        </a>
+        <div id="collapseMaj" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('building.management.index') }}">Manajemen Gedung</a>
+                <a class="collapse-item" href="{{ route('facility.management.index') }}">Manajemen Fasilitas</a>
+                
+                
+        </div>
+    </li>
+
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('facility.index') }}">

@@ -825,13 +825,14 @@ class AdminController extends Controller
             'person_responsible' => 'required',
             'proposal' => 'required|max:1000|file|mimes:pdf|max:2048',
         ]);
+
         try {
 
             $extFile = $req->proposal->getClientOriginalExtension();
             $namaFile = 'proposal-'.time().".".$extFile;
             $path = $req->proposal->move('pdf/funding_petition', $namaFile);
     
-            DB::table('proposal')->insert([
+            DB::table('funding_petition')->insert([
                 'date_of_activity' => $req->date_of_activity,
                 'organization_name' => $req->organization_name,
                 'budget_amount' => $req->budget_amount,
@@ -856,7 +857,7 @@ class AdminController extends Controller
                             ->where('id', $id)
                             ->first();
         $data['funding_petition_status'] = Config::get('enums.funding_petition_status');
-        return view('admin.activity.edit', $data);
+        return view('admin.funding_petition.edit', $data);
     }
 
     public function funding_petition_update(Request $req, $id) {
@@ -876,7 +877,9 @@ class AdminController extends Controller
                 $namaFile = 'proposal-'.time().".".$extFile;
                 $path = $req->proposal->move('pdf/funding_petition', $namaFile);
 
-                DB::table('proposal')->insert([
+                DB::table('funding_petition')
+                ->where('id', $id)
+                ->update([
                     'date_of_activity' => $req->date_of_activity,
                     'organization_name' => $req->organization_name,
                     'budget_amount' => $req->budget_amount,
@@ -888,7 +891,9 @@ class AdminController extends Controller
                 ]);
             } else {
 
-                DB::table('proposal')->insert([
+                DB::table('funding_petition')
+                ->where('id', $id)
+                ->update([
                     'date_of_activity' => $req->date_of_activity,
                     'organization_name' => $req->organization_name,
                     'budget_amount' => $req->budget_amount,
@@ -918,7 +923,7 @@ class AdminController extends Controller
                 return back();
             }
 
-            DB::table('petition')
+            DB::table('funding_petition')
                         ->where('id', $id)
                         ->delete();
 
@@ -930,6 +935,374 @@ class AdminController extends Controller
             return back();
         }
     }
+    // Activity Report
+    public function activity_report_index() {
+        $data['activity_report'] = DB::table('activity_report')->get();
+        $data['activity_report_status'] = Config::get('enums.activity_report_status');
+        return view('admin.activity_report.index', $data);
+    }
+
+    public function activity_report_create() {
+        $data['activity_report_status'] = Config::get('enums.activity_report_status');
+        return view('admin.activity_report.create', $data);
+    }
+
+    public function activity_report_store(Request $req) {
+        $req->validate([
+            'date_of_activity' => 'required',
+            'organization_name' => 'required',
+            'information' => 'required',
+            'person_responsible' => 'required',
+            'documentation' => 'required|max:1000|file|mimes:png,jpeg,jpg|max:2048',
+        ]);
+
+        try {
+
+            $extFile = $req->documentation->getClientOriginalExtension();
+            $namaFile = 'documentation-'.time().".".$extFile;
+            $path = $req->documentation->move('activity_report/documentation', $namaFile);
+    
+            DB::table('activity_report')->insert([
+                'date_of_activity' => $req->date_of_activity,
+                'organization_name' => $req->organization_name,
+                'information' => $req->information,
+                'person_responsible' => $req->person_responsible,
+                'documentation' => $path,
+                'status' => 0,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('activity.report.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function activity_report_edit($id) {
+        $data['activity_report'] = DB::table('activity_report')
+                            ->where('id', $id)
+                            ->first();
+        $data['activity_report_status'] = Config::get('enums.activity_report_status');
+        return view('admin.activity_report.edit', $data);
+    }
+
+    public function activity_report_update(Request $req, $id) {
+        $req->validate([
+            'date_of_activity' => 'required',
+            'organization_name' => 'required',
+            'information' => 'required',
+            'person_responsible' => 'required',
+            'documentation' => 'max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'status' => 'required'
+        ]);
+
+        try {
+
+            if($req->hasFile('documentation')) {
+                $extFile = $req->documentation->getClientOriginalExtension();
+                $namaFile = 'documentation-'.time().".".$extFile;
+                $path = $req->documentation->move('activity_report/documentation', $namaFile);
+
+                DB::table('activity_report')
+                ->where('id', $id)
+                ->update([
+                    'date_of_activity' => $req->date_of_activity,
+                    'organization_name' => $req->organization_name,
+                    'information' => $req->information,
+                    'person_responsible' => $req->person_responsible,
+                    'documentation' => $path,
+                    'status' => $req->status,
+                    'updated_at' => Carbon::now()
+                ]);
+            } else {
+
+                DB::table('activity_report')
+                ->where('id', $id)
+                ->update([
+                    'date_of_activity' => $req->date_of_activity,
+                    'organization_name' => $req->organization_name,
+                    'information' => $req->information,
+                    'person_responsible' => $req->person_responsible,
+                    'status' => $req->status,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+    
+            Alert::success('Success');
+
+            return redirect(route('activity.report.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function activity_report_destroy($id) {
+        try {   
+            $check = DB::table('activity_report')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('activity report not found');
+                return back();
+            }
+
+            DB::table('activity_report')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('activity.report.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+    // Building Management
+    public function building_management_index() {
+        $data['building_management'] = DB::table('building_management')->get();
+       
+        return view('admin.building_management.index', $data);
+    }
+
+    public function building_management_create() {
+        
+        return view('admin.building_management.create');
+    }
+
+    public function building_store(Request $req) {
+        $req->validate([
+            'building_code' => 'required',
+            'building_name' => 'required',
+            'condition' => 'required',
+            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg|max:2048',
+        ]);
+
+        try {
+
+            $extFile = $req->picture->getClientOriginalExtension();
+            $namaFile = 'building-'.time().".".$extFile;
+            $path = $req->picture->move('building', $namaFile);
+    
+            DB::table('building_management')->insert([
+                'building_code' => $req->building_code,
+                'building_name' => $req->building_name,
+                'condition' => $req->condition,
+                'picture' => $path,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('building_management.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function building_management_edit($id) {
+        $data['building_management'] = DB::table('building_management')
+                            ->where('id', $id)
+                            ->first();
+        
+        return view('admin.building_management.edit', $data);
+    }
+
+    public function building_management_update(Request $req, $id) {
+        $req->validate([
+            'building_code' => 'required',
+            'building_name' => 'required',
+            'condition' => 'required',
+            'picture' => 'max:1000|file|mimes:png,jpeg,jpg|max:2048',
+        ]);
+
+        try {
+
+            if($req->hasFile('picture')) {
+                $extFile = $req->picture->getClientOriginalExtension();
+                $namaFile = 'building-'.time().".".$extFile;
+                $path = $req->picture->move('building', $namaFile);
+
+                DB::table('building_management')
+                ->where('id', $id)
+                ->update([
+                    'building_code' => $req->building_code,
+                    'building_name' => $req->building_name,
+                    'condition' => $req->condition,
+                    'picture' => $path,
+                    'updated_at' => Carbon::now()
+                ]);
+            } else {
+
+                DB::table('building_management')
+                ->where('id', $id)
+                ->update([
+                    'building_code' => $req->building_code,
+                    'building_name' => $req->building_name,
+                    'condition' => $req->condition,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+    
+            Alert::success('Success');
+
+            return redirect(route('building.management.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function building_management_destroy($id) {
+        try {   
+            $check = DB::table('building_management')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('building management not found');
+                return back();
+            }
+
+            DB::table('building_management')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('building.management.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+    // Facility Management
+    public function facility_management_index() {
+        $data['facility_management'] = DB::table('facility_management')->get();
+       
+        return view('admin.facility_management.index', $data);
+    }
+
+    public function facility_management_create() {
+        
+        return view('admin.facility_management.create');
+    }
+
+    public function facility_management_store(Request $req) {
+        $req->validate([
+            'facility_code' => 'required',
+            'facility_name' => 'required',
+            'condition' => 'required',
+            'stock' => 'required',
+            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg|max:2048',
+        ]);
+
+        try {
+
+            $extFile = $req->picture->getClientOriginalExtension();
+            $namaFile = 'facility-'.time().".".$extFile;
+            $path = $req->picture->move('facility', $namaFile);
+    
+            DB::table('facility_management')->insert([
+                'facility_code' => $req->facility_code,
+                'facility_name' => $req->facility_name,
+                'condition' => $req->condition,
+                'stock' => $req->stock,
+                'picture' => $path,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('facility_management.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function facility_management_edit($id) {
+        $data['facility_management'] = DB::table('facility_management')
+                            ->where('id', $id)
+                            ->first();
+        
+        return view('admin.facility_management.edit', $data);
+    }
+
+    public function facility_management_update(Request $req, $id) {
+        $req->validate([
+            'facility_code' => 'required',
+            'facility_name' => 'required',
+            'condition' => 'required',
+            'picture' => 'max:1000|file|mimes:png,jpeg,jpg|max:2048',
+        ]);
+
+        try {
+
+            if($req->hasFile('picture')) {
+                $extFile = $req->picture->getClientOriginalExtension();
+                $namaFile = 'facility-'.time().".".$extFile;
+                $path = $req->picture->move('facility', $namaFile);
+
+                DB::table('facility_management')
+                ->where('id', $id)
+                ->update([
+                    'facility_code' => $req->facility_code,
+                    'facility_name' => $req->facility_name,
+                    'condition' => $req->condition,
+                    'stock' => $req->stock,
+                    'picture' => $path,
+                    'updated_at' => Carbon::now()
+                ]);
+            } else {
+
+                DB::table('facility_management')
+                ->where('id', $id)
+                ->update([
+                    'facility_code' => $req->facility_code,
+                    'facility_name' => $req->facility_name,
+                    'condition' => $req->condition,
+                    'stock' => $req->stock,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+    
+            Alert::success('Success');
+
+            return redirect(route('facility.management.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function facility_management_destroy($id) {
+        try {   
+            $check = DB::table('facility_management')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('facility management not found');
+                return back();
+            }
+
+            DB::table('facility_management')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('facility.management.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+   
     // User Executive
     public function user_executive_index() {
         $data['executive'] = DB::table('executive')->get();
