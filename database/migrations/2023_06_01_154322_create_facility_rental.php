@@ -22,7 +22,7 @@ class CreateFacilityRental extends Migration
             $table->text('rental_reasons');
             $table->string('person_responsible');
             $table->string('telp');
-            $table->string('status')->comment('0:waiting_approval;1:approval;2:rejected');
+            $table->string('status')->comment('0:waiting_approval;1:approval;2:rejected;3:finished');
             $table->timestamps();
         });
     }

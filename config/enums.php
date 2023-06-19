@@ -33,6 +33,12 @@
             'waiting_approval',
             'approval',
             'rejected'
-        ]
+        ],
+        'rental_status' => [
+            'waiting_approval',
+            'approval',
+            'rejected',
+            'finished'
+        ],
     ];
 ?>

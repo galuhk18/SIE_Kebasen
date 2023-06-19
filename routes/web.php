@@ -134,6 +134,15 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'facility_management_update'])->name('facility.management.update');
         Route::get('/destroy/{id}', [AdminController::class,'facility_management_destroy'])->name('facility.management.destroy');
     });
+    // Building Rental
+    Route::prefix('building/rental')->group(function () {
+        Route::get('/', [AdminController::class,'building_rental_index'])->name('building.rental.index');
+        Route::get('/create', [AdminController::class,'building_rental_create'])->name('building.rental.create');
+        Route::post('/create', [AdminController::class,'building_rental_store'])->name('building.rental.store');
+        Route::get('/edit/{id}', [AdminController::class,'building_rental_edit'])->name('building.rental.edit');
+        Route::put('/edit/{id}', [AdminController::class,'building_rental_update'])->name('building.rental.update');
+        Route::get('/destroy/{id}', [AdminController::class,'building_rental_destroy'])->name('building.rental.destroy');
+    });
     // User Executive
     Route::prefix('user/executive')->group(function () {
         Route::get('/', [AdminController::class,'user_executive_index'])->name('user.executive.index');

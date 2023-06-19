@@ -1074,7 +1074,7 @@ class AdminController extends Controller
         return view('admin.building_management.create');
     }
 
-    public function building_store(Request $req) {
+    public function building_management_store(Request $req) {
         $req->validate([
             'building_code' => 'required',
             'building_name' => 'required',
@@ -1302,7 +1302,156 @@ class AdminController extends Controller
             return back();
         }
     }
-   
+    // Building Rental
+    public function building_rental_index() {
+        
+        $data['building_rental'] = DB::table('building_rental')
+                                    ->selectRaw('
+                                        building_rental.id,
+                                        building_rental.building_code,
+                                        building_management.building_name,
+                                        building_rental.start_date,
+                                        building_rental.end_date,
+                                        building_rental.rental_reasons,
+                                        building_rental.number_of_people,
+                                        building_rental.person_responsible,
+                                        building_rental.telp,
+                                        building_rental.status,
+                                        building_rental.created_at,
+                                        building_rental.updated_at
+                                        ')
+                                    ->leftJoin('building_management','building_rental.building_code','=','building_management.building_code')
+                                    ->orderByDesc('created_at')
+                                    ->get();
+        $data['rental_status'] = Config::get('enums.rental_status');
+        return view('admin.building_rental.index', $data);
+    }
+
+    public function building_rental_create() {
+        $data['building'] = DB::table('building_management')->get();
+        $data['rental_status'] = Config::get('enums.rental_status');
+        return view('admin.building_rental.create', $data);
+    }
+
+    public function building_rental_store(Request $req) {
+        $req->validate([
+            'building_code' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'rental_reasons' => 'required',
+            'number_of_people' => 'required',
+            'person_responsible' => 'required',
+            'telp' => 'required',
+        ]);
+
+        try {
+
+
+            $check_building_exist = DB::table('building_management')
+                                ->where('building_code', $req->building_code)
+                                ->first();
+            if(!$check_building_exist) {
+                Alert::error('Building not found');
+                return back();
+            }
+
+            $check_building_status = DB::table('building_rental')
+                                ->where('building_code', $req->building_code)
+                                ->where('status','!=',3)
+                                ->where('status','!=',2)
+                                ->count();
+
+            if($check_building_status > 0) {
+                Alert::error('Building is still process rented');
+                return back();
+            }
+
+            DB::table('building_rental')->insert([
+                'building_code' => $req->building_code,
+                'start_date' => $req->start_date,
+                'end_date' => $req->end_date,
+                'rental_reasons' => $req->rental_reasons,
+                'number_of_people' => $req->number_of_people,
+                'person_responsible' => $req->person_responsible,
+                'telp' => $req->telp,
+                'status' => 0,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('building.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function building_rental_edit($id) {
+        $data['building'] = DB::table('building_management')->get();
+        $data['building_rental'] = DB::table('building_rental')
+                            ->where('id', $id)
+                            ->first();
+        $data['rental_status'] = Config::get('enums.rental_status');
+        return view('admin.building_rental.edit', $data);
+    }
+
+    public function building_rental_update(Request $req, $id) {
+        $req->validate([
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'rental_reasons' => 'required',
+            'number_of_people' => 'required',
+            'person_responsible' => 'required',
+            'telp' => 'required',
+            'status' => 'required',
+        ]);
+
+        try {
+            DB::table('building_rental')
+            ->where('id', $id)
+            ->update([
+                'start_date' => $req->start_date,
+                'end_date' => $req->end_date,
+                'rental_reasons' => $req->rental_reasons,
+                'number_of_people' => $req->number_of_people,
+                'person_responsible' => $req->person_responsible,
+                'telp' => $req->telp,
+                'status' => $req->status,
+                'updated_at' => Carbon::now()
+            ]);
+    
+            Alert::success('Success');
+
+            return redirect(route('building.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function building_rental_destroy($id) {
+        try {   
+            $check = DB::table('building_rental')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('building rental not found');
+                return back();
+            }
+
+            DB::table('building_rental')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('building.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // User Executive
     public function user_executive_index() {
         $data['executive'] = DB::table('executive')->get();

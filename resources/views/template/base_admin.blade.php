@@ -27,7 +27,7 @@
 
     <link href="{{ asset('assets/css/custom_style.css') }}" rel="stylesheet">
 
-
+    @yield('style')
 
 </head>
 
