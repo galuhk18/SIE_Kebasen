@@ -174,6 +174,7 @@ class AdminController extends Controller
     public function birth_store(Request $req) {
         $req->validate([
             'nik' => 'required',
+            'no_akta' => 'required',
             'name' => 'required',
             'gender' => 'required',
             'address' => 'required',
@@ -183,9 +184,10 @@ class AdminController extends Controller
         ]);
 
         try {
-            //code...
+        
             DB::table('birth')->insert([
                 'nik' => $req->nik,
+                'no_akta' => $req->no_akta,
                 'name' => $req->name,
                 'gender' => $req->gender,
                 'address' => $req->address,
@@ -216,6 +218,7 @@ class AdminController extends Controller
     public function birth_update(Request $req, $id) {
         $req->validate([
             'nik' => 'required',
+            'no_akta' => 'required',
             'name' => 'required',
             'gender' => 'required',
             'address' => 'required',
@@ -230,6 +233,7 @@ class AdminController extends Controller
             ->where('id', $id)
             ->update([
                 'nik' => $req->nik,
+                'no_akta' => $req->no_akta,
                 'name' => $req->name,
                 'gender' => $req->gender,
                 'address' => $req->address,
@@ -1447,6 +1451,193 @@ class AdminController extends Controller
             Alert::success('Success');
 
             return redirect(route('building.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+    // Facility Rental
+    public function facility_rental_index() {
+        
+        $data['facility_rental'] = DB::table('facility_rental')
+                                    ->selectRaw('
+                                        facility_rental.id,
+                                        facility_rental.facility_code,
+                                        facility_rental.amount,
+                                        facility_management.facility_name,
+                                        facility_rental.start_date,
+                                        facility_rental.end_date,
+                                        facility_rental.rental_reasons,
+                                        facility_rental.person_responsible,
+                                        facility_rental.telp,
+                                        facility_rental.status,
+                                        facility_rental.created_at,
+                                        facility_rental.updated_at
+                                        ')
+                                    ->leftJoin('facility_management','facility_rental.facility_code','=','facility_management.facility_code')
+                                    ->orderByDesc('created_at')
+                                    ->get();
+        $data['rental_status'] = Config::get('enums.rental_status');
+        return view('admin.facility_rental.index', $data);
+    }
+
+    public function facility_rental_create() {
+        $data['facility'] = DB::table('facility_management')->get();
+        $data['rental_status'] = Config::get('enums.rental_status');
+        return view('admin.facility_rental.create', $data);
+    }
+
+    public function facility_rental_store(Request $req) {
+        $req->validate([
+            'facility_code' => 'required',
+            'amount' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'rental_reasons' => 'required',
+            'person_responsible' => 'required',
+            'telp' => 'required',
+        ]);
+
+        try {
+
+
+            $check_facility_exist = DB::table('facility_management')
+                                ->where('facility_code', $req->facility_code)
+                                ->first();
+            if(!$check_facility_exist) {
+                Alert::error('facility not found');
+                return back();
+            }
+
+            $check_facility_status = DB::table('facility_rental')
+                                ->where('facility_code', $req->facility_code)
+                                ->where('status','!=',3)
+                                ->where('status','!=',2)
+                                ->count();
+
+            if($check_facility_status > 0) {
+                Alert::error('facility is still process rented');
+                return back();
+            }
+
+            
+            $total = $check_facility_exist->stock - $req->amount;
+            
+            if($total < 0) {
+                Alert::error('out of stock');
+                return back();
+            }
+
+            DB::table('facility_management')
+                ->where('facility_code', $req->facility_code)
+                ->update([
+                    'stock' => $total
+                ]);
+
+            DB::table('facility_rental')->insert([
+                'facility_code' => $req->facility_code,
+                'amount' => $req->amount,
+                'start_date' => $req->start_date,
+                'end_date' => $req->end_date,
+                'rental_reasons' => $req->rental_reasons,
+                'person_responsible' => $req->person_responsible,
+                'telp' => $req->telp,
+                'status' => 0,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('facility.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function facility_rental_edit($id) {
+        $data['facility'] = DB::table('facility_management')->get();
+        $data['facility_rental'] = DB::table('facility_rental')
+                            ->where('id', $id)
+                            ->first();
+        $data['rental_status'] = Config::get('enums.rental_status');
+        return view('admin.facility_rental.edit', $data);
+    }
+
+    public function facility_rental_update(Request $req, $id) {
+        $req->validate([
+            'amount' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'rental_reasons' => 'required',
+            'person_responsible' => 'required',
+            'telp' => 'required',
+            'status' => 'required',
+        ]);
+
+        try {
+
+            $facility_rental = DB::table('facility_rental')
+            ->where('id', $id)
+            ->first();
+            $check_facility = DB::table('facility_management')
+                                ->where('facility_code', $facility_rental->facility_code)
+                                ->first();
+            $total = $check_facility->stock - $req->amount;
+            
+            if($total < 0) {
+                Alert::error('out of stock');
+                return back();
+            }
+
+
+            if($req->status == 2 || $req->status == 3) {
+                $stock = $check_facility->stock + $facility_rental->amount;
+                DB::table('facility_management')
+                    ->where('facility_code', $facility_rental->facility_code)
+                    ->update([
+                        'stock' => $stock
+                    ]);
+            }
+
+            DB::table('facility_rental')
+            ->where('id', $id)
+            ->update([
+                'start_date' => $req->start_date,
+                'end_date' => $req->end_date,
+                'rental_reasons' => $req->rental_reasons,
+                'person_responsible' => $req->person_responsible,
+                'telp' => $req->telp,
+                'status' => $req->status,
+                'updated_at' => Carbon::now()
+            ]);
+    
+            Alert::success('Success');
+
+            return redirect(route('facility.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function facility_rental_destroy($id) {
+        try {   
+            $check = DB::table('facility_rental')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('facility rental not found');
+                return back();
+            }
+
+            DB::table('facility_rental')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('facility.rental.index'));
         } catch (\Exception $e) {         
             Alert::error($e->getMessage());
             return back();

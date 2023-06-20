@@ -24,6 +24,16 @@
                         @enderror
                     </div>
 
+                    <div class="form-group">
+                        <label for="no_akta">No Akta</label>
+                        <input type="text" name="no_akta" class="form-control" value="{{ $birth->no_akta }}">
+                        @error('no_akta')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
                     
 
                     <div class="form-group">

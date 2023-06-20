@@ -143,6 +143,15 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::put('/edit/{id}', [AdminController::class,'building_rental_update'])->name('building.rental.update');
         Route::get('/destroy/{id}', [AdminController::class,'building_rental_destroy'])->name('building.rental.destroy');
     });
+    // Facility Rental
+    Route::prefix('facility/rental')->group(function () {
+        Route::get('/', [AdminController::class,'facility_rental_index'])->name('facility.rental.index');
+        Route::get('/create', [AdminController::class,'facility_rental_create'])->name('facility.rental.create');
+        Route::post('/create', [AdminController::class,'facility_rental_store'])->name('facility.rental.store');
+        Route::get('/edit/{id}', [AdminController::class,'facility_rental_edit'])->name('facility.rental.edit');
+        Route::put('/edit/{id}', [AdminController::class,'facility_rental_update'])->name('facility.rental.update');
+        Route::get('/destroy/{id}', [AdminController::class,'facility_rental_destroy'])->name('facility.rental.destroy');
+    });
     // User Executive
     Route::prefix('user/executive')->group(function () {
         Route::get('/', [AdminController::class,'user_executive_index'])->name('user.executive.index');

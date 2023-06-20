@@ -17,6 +17,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">NIK</th>
+                            <th class="text-center">No Akta</th>
                             <th class="text-center">Name</th>
                             <th class="text-center">Gender</th>
                             <th class="text-center">Address</th>
@@ -33,6 +34,7 @@
                             
                         <tr>
                             <td class="text-center">{{ $item->nik }}</td>
+                            <td class="text-center">{{ $item->no_akta }}</td>
                             <td class="text-center">{{ $item->name }}</td>
                             <td class="text-center">{{ $item->gender }}</td>
                             <td class="text-center">{{ $item->address }}</td>

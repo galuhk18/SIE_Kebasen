@@ -16,6 +16,7 @@ class CreateBirth extends Migration
         Schema::create('birth', function (Blueprint $table) {
             $table->id();
             $table->string('nik');
+            $table->string('no_akta');
             $table->string('name');
             $table->string('gender');
             $table->text('address');

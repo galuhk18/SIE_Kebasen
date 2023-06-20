@@ -89,6 +89,7 @@
                 <a class="collapse-item" href="{{ route('building.management.index') }}">Manajemen Gedung</a>
                 <a class="collapse-item" href="{{ route('facility.management.index') }}">Manajemen Fasilitas</a>
                 <a class="collapse-item" href="{{ route('building.rental.index') }}">Penyewaan Gedung</a>
+                <a class="collapse-item" href="{{ route('facility.rental.index') }}">Penyewaan Fasilitas</a>
                 
                 
         </div>
