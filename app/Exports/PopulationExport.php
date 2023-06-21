@@ -5,9 +5,11 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
-class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths
+class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths, WithMapping
 {
     public function collection()
     {
@@ -68,6 +70,27 @@ class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths
             'L' => 30,
             'M' => 30,
             'N' => 30,
+        ];
+    }
+
+    public function map($row): array
+    {
+        return [
+            $row->nik,
+            $row->family_card,
+            $row->name,
+            $row->gender,
+            $row->address,
+            Carbon::parse($row->date_of_birth)->format('Y-m-d'),
+            $row->birth_place,
+            $row->phone_number,
+            $row->religion,
+            $row->citizenship,
+            $row->married,
+            $row->job,
+            $row->father_name,
+            $row->mother_name
+            
         ];
     }
 }
