@@ -12,8 +12,11 @@ use RealRashid\SweetAlert\Facades\Alert;
 class AdminController extends Controller
 {
     public function index() {
-        
-        return view('admin.index');
+        $data['population_amount'] = DB::table('population')->count();
+        $data['facility_amount'] = DB::table('facility')->count();
+        $data['decision_amount'] = DB::table('decision')->count();
+        $data['birth_death_amount'] = DB::table('birth')->count() + DB::table('death')->count();
+        return view('admin.index', $data);
     }
 
     // Population
