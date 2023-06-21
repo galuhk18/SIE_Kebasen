@@ -16,9 +16,6 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::get('/', [HomeController::class,'index'])->name('index');
 
@@ -151,6 +148,15 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'facility_rental_edit'])->name('facility.rental.edit');
         Route::put('/edit/{id}', [AdminController::class,'facility_rental_update'])->name('facility.rental.update');
         Route::get('/destroy/{id}', [AdminController::class,'facility_rental_destroy'])->name('facility.rental.destroy');
+    });
+    // Facility Compensation
+    Route::prefix('facility/compensation')->group(function () {
+        Route::get('/', [AdminController::class,'facility_compensation_index'])->name('facility.compensation.index');
+        Route::get('/create', [AdminController::class,'facility_compensation_create'])->name('facility.compensation.create');
+        Route::post('/create', [AdminController::class,'facility_compensation_store'])->name('facility.compensation.store');
+        Route::get('/edit/{id}', [AdminController::class,'facility_compensation_edit'])->name('facility.compensation.edit');
+        Route::put('/edit/{id}', [AdminController::class,'facility_compensation_update'])->name('facility.compensation.update');
+        Route::get('/destroy/{id}', [AdminController::class,'facility_compensation_destroy'])->name('facility.compensation.destroy');
     });
     // User Executive
     Route::prefix('user/executive')->group(function () {

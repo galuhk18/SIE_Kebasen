@@ -20,7 +20,7 @@ class CreateFacilityCompensation extends Migration
             $table->integer('amount_compensation');
             $table->string('person_responsible');
             $table->string('telp');
-            $table->text('picutre')->nullable();
+            $table->text('picture')->nullable();
             $table->string('status')->comment('0:waiting_approval;1:approval;2:rejected');
             $table->timestamps();
         });

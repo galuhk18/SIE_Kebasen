@@ -1,4 +1,7 @@
 @extends('template.base_admin')
+@section('title')
+<title>{{ env('APP_NAME') }}</title>
+@endsection
 @section('content')
     <div class="card">
         <div class="card-body">

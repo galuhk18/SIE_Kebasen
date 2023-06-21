@@ -40,5 +40,10 @@
             'rejected',
             'finished'
         ],
+        'compensation_status' => [
+            'waiting_approval',
+            'approval',
+            'rejected',
+        ]
     ];
 ?>

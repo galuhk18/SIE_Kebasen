@@ -827,7 +827,7 @@ class AdminController extends Controller
             'budget_amount' => 'required',
             'event_name' => 'required',
             'person_responsible' => 'required',
-            'proposal' => 'required|max:1000|file|mimes:pdf|max:2048',
+            'proposal' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         try {
@@ -871,7 +871,7 @@ class AdminController extends Controller
             'budget_amount' => 'required',
             'event_name' => 'required',
             'person_responsible' => 'required',
-            'proposal' => 'max:1000|file|mimes:pdf|max:2048',
+            'proposal' => 'file|mimes:pdf|max:2048',
             'status' => 'required'
         ]);
         try {
@@ -957,7 +957,7 @@ class AdminController extends Controller
             'organization_name' => 'required',
             'information' => 'required',
             'person_responsible' => 'required',
-            'documentation' => 'required|max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'documentation' => 'required|max:1000|file|mimes:png,jpeg,jpg',
         ]);
 
         try {
@@ -999,7 +999,7 @@ class AdminController extends Controller
             'organization_name' => 'required',
             'information' => 'required',
             'person_responsible' => 'required',
-            'documentation' => 'max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'documentation' => 'max:1000|file|mimes:png,jpeg,jpg',
             'status' => 'required'
         ]);
 
@@ -1083,7 +1083,7 @@ class AdminController extends Controller
             'building_code' => 'required',
             'building_name' => 'required',
             'condition' => 'required',
-            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg',
         ]);
 
         try {
@@ -1122,7 +1122,7 @@ class AdminController extends Controller
             'building_code' => 'required',
             'building_name' => 'required',
             'condition' => 'required',
-            'picture' => 'max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'picture' => 'max:1000|file|mimes:png,jpeg,jpg',
         ]);
 
         try {
@@ -1202,7 +1202,7 @@ class AdminController extends Controller
             'facility_name' => 'required',
             'condition' => 'required',
             'stock' => 'required',
-            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg',
         ]);
 
         try {
@@ -1242,7 +1242,7 @@ class AdminController extends Controller
             'facility_code' => 'required',
             'facility_name' => 'required',
             'condition' => 'required',
-            'picture' => 'max:1000|file|mimes:png,jpeg,jpg|max:2048',
+            'picture' => 'max:1000|file|mimes:png,jpeg,jpg',
         ]);
 
         try {
@@ -1638,6 +1638,140 @@ class AdminController extends Controller
             Alert::success('Success');
 
             return redirect(route('facility.rental.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+    // Facility Compensation
+    public function facility_compensation_index() {
+        
+        $data['facility_compensation'] = DB::table('facility_compensation')
+                                    ->orderByDesc('created_at')
+                                    ->get();
+        $data['compensation_status'] = Config::get('enums.compensation_status');
+        return view('admin.facility_compensation.index', $data);
+    }
+
+    public function facility_compensation_create() {
+        $data['compensation_status'] = Config::get('enums.compensation_status');
+        return view('admin.facility_compensation.create', $data);
+    }
+
+    public function facility_compensation_store(Request $req) {
+        $req->validate([
+            'facility_name' => 'required',
+            'amount' => 'required',
+            'amount_compensation' => 'required',
+            'person_responsible' => 'required',
+            'telp' => 'required',
+            'picture' => 'required|max:1000|file|mimes:png,jpeg,jpg',
+        ]);
+
+        try {
+
+            $extFile = $req->picture->getClientOriginalExtension();
+            $namaFile = 'picture-'.time().".".$extFile;
+            $path = $req->picture->move('facility_compensation', $namaFile);
+         
+            DB::table('facility_compensation')->insert([
+                'facility_name' => $req->facility_name,
+                'amount' => $req->amount,
+                'amount_compensation' => $req->amount_compensation,
+                'person_responsible' => $req->person_responsible,
+                'telp' => $req->telp,
+                'picture' => $path,
+                'status' => 0,
+                'created_at' => Carbon::now()
+            ]);
+
+            Alert::success('Success');
+
+            return redirect(route('facility.compensation.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function facility_compensation_edit($id) {
+        $data['facility_compensation'] = DB::table('facility_compensation')
+                            ->where('id', $id)
+                            ->first();
+        $data['compensation_status'] = Config::get('enums.compensation_status');
+        return view('admin.facility_compensation.edit', $data);
+    }
+
+    public function facility_compensation_update(Request $req, $id) {
+        $req->validate([
+            'facility_name' => 'required',
+            'amount' => 'required',
+            'amount_compensation' => 'required',
+            'person_responsible' => 'required',
+            'telp' => 'required',
+            'picture' => 'max:1000|file|mimes:png,jpeg,jpg',
+            'status' => 'required'
+        ]);
+
+        try {
+
+            if($req->hasFile('picture')) {
+                $extFile = $req->picture->getClientOriginalExtension();
+                $namaFile = 'picture-'.time().".".$extFile;
+                $path = $req->picture->move('facility_compensation', $namaFile);
+                DB::table('facility_compensation')
+                ->where('id', $id)
+                ->update([
+                    'facility_name' => $req->facility_name,
+                    'amount' => $req->amount,
+                    'amount_compensation' => $req->amount_compensation,
+                    'person_responsible' => $req->person_responsible,
+                    'telp' => $req->telp,
+                    'picture' => $path,
+                    'status' => $req->status,
+                    'updated_at' => Carbon::now()
+                ]);
+            } else {
+                DB::table('facility_compensation')
+                ->where('id', $id)
+                ->update([
+                    'facility_name' => $req->facility_name,
+                    'amount' => $req->amount,
+                    'amount_compensation' => $req->amount_compensation,
+                    'person_responsible' => $req->person_responsible,
+                    'telp' => $req->telp,
+                    'status' => $req->status,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+
+    
+            Alert::success('Success');
+
+            return redirect(route('facility.compensation.index'));
+        } catch (\Exception $e) {         
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
+
+    public function facility_compensation_destroy($id) {
+        try {   
+            $check = DB::table('facility_compensation')
+                        ->where('id', $id)
+                        ->first();
+            if(!$check) {
+                Alert::error('building rental not found');
+                return back();
+            }
+
+            DB::table('facility_compensation')
+                        ->where('id', $id)
+                        ->delete();
+
+            Alert::success('Success');
+
+            return redirect(route('facility.compensation.index'));
         } catch (\Exception $e) {         
             Alert::error($e->getMessage());
             return back();
