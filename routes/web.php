@@ -168,6 +168,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/pass/{id}', [AdminController::class,'user_executive_pass'])->name('user.executive.pass');
         Route::put('/pass/{id}', [AdminController::class,'user_executive_pass_act'])->name('user.executive.pass.act');
         Route::get('/destroy/{id}', [AdminController::class,'user_executive_destroy'])->name('user.executive.destroy');
+        Route::get('/profile', [AdminController::class,'user_executive_profile'])->name('user.executive.profile');
     });
     // User admin
     Route::prefix('user/admin')->group(function () {

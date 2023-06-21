@@ -1889,8 +1889,13 @@ class AdminController extends Controller
             ->update($exe);
 
             Alert::success('Success');
+            if(session('executive_id') == $id) {
 
-            return redirect(route('user.executive.index'));
+                return redirect(route('user.executive.profile'));
+            } else {
+
+                return redirect(route('user.executive.index'));
+            }
         } catch (\Exception $e) {         
             Alert::error($e->getMessage());
             return back();
@@ -1920,8 +1925,13 @@ class AdminController extends Controller
             ]);
 
             Alert::success('Success');
+            if(session('executive_id') == $id) {
 
-            return redirect(route('user.executive.index'));
+                return redirect(route('user.executive.profile'));
+            } else {
+
+                return redirect(route('user.executive.index'));
+            }
         } catch (\Exception $e) {         
             Alert::error($e->getMessage());
             return back();
@@ -1950,6 +1960,13 @@ class AdminController extends Controller
             Alert::error($e->getMessage());
             return back();
         }
+    }
+    public function user_executive_profile() {
+        $id = session('executive_id');
+        $data['profile'] = DB::table('executive')
+                        ->where('id', $id)
+                        ->first();
+        return view('admin.user-executive.profile', $data);
     }
     // User Admin
     public function user_admin_index() {

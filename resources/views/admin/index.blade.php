@@ -81,7 +81,16 @@
     <div class="card-body">
         @if(session()->has('admin_id'))
             <div class="text-center">
-                <h1>Administrator</h1>
+                <h1>Selamat Datang</h1>
+                <h2>Administrator</h2>
+                <p>{{ env('APP_NAME') }}</p>
+            </div>
+        @endif
+
+        @if(session()->has('executive_id'))
+            <div class="text-center">
+                <h1>Selamat Datang</h1>
+                <h2>Executive</h2>
                 <p>{{ env('APP_NAME') }}</p>
             </div>
         @endif

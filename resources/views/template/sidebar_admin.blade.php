@@ -106,6 +106,7 @@
     <div class="sidebar-heading text-dark">
         Profile
     </div>
+    @if (session()->has('admin_id'))
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.executive.index') }}">
             <i class="fas fa-user-secret"></i>
@@ -115,9 +116,7 @@
         <a class="nav-link" href="{{ route('user.admin.index') }}">
             <i class="fas fa-user"></i>
             <span>Admin</span></a>
-    </li>
-    @if (session()->has('admin_id'))
-        
+    </li>   
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.admin.profile') }}">
             <i class="fa fa-user-circle"></i>
@@ -125,7 +124,16 @@
         </a>
     </li>
     @endif
-
+        
+    
+    @if (session()->has('executive_id'))
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('user.executive.profile') }}">
+            <i class="fa fa-user-circle"></i>
+            <span>Profile Saya</span>
+        </a>
+    </li>
+    @endif
     <hr class="sidebar-divider my-0">
 
 
