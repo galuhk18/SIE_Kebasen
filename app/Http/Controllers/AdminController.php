@@ -27,6 +27,7 @@ class AdminController extends Controller
 
     // Population
     public function population_index() {
+        $data['population_amount'] = DB::table('population')->count();
         $data['population'] = DB::table('population')->get();
         return view('admin.population.index', $data);
     }

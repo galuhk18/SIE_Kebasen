@@ -15,10 +15,14 @@
             <div class="row">
                 <div class="col-lg-6 mx-auto">
                     <div class="text-center">
-
+                        @if ($profile->picture)
+                            <img src="{{ asset($profile->picture) }}" style="width: 200px; height:200px;" class="img-fluid rounded-circle" alt="">
+                        @else
+                            
                         <i class="fa fa-user-circle" style="font-size: 200px;"></i>
+                        @endif
                     </div>
-                    <div class="text-center">
+                    <div class="text-center mt-2">
 
                         <a href="{{ route('user.executive.edit',['id' => session('executive_id')]) }}" class="btn btn-info"> <i class="fa fa-user-edit"></i> Ubah Profile</a>
                         <a href="{{ route('user.executive.pass',['id' => session('executive_id')]) }}" class="btn btn-warning"> <i class="fa fa-user-lock"></i> Ubah Password</a>

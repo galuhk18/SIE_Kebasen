@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-side sidebar sidebar-light accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.index') }}">
         <div class="sidebar-brand-icon">
            
            <img width="50px" src="{{ asset('assets/img/logo-bms.png') }}" alt="logo">
@@ -16,7 +16,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('admin.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
