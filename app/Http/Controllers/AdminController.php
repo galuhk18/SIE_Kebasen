@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PopulationExport;
+use App\Exports\FormPopulationExport;
+use App\Imports\PopulationImport;
+use Illuminate\Support\Facades\Validator;
+
 
 class AdminController extends Controller
 {
@@ -162,7 +168,43 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function population_export() {
+        $name = 'population-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new PopulationExport, $name);
+    }
 
+    public function population_form_export() {
+        $name = 'form-population-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new FormPopulationExport, $name);
+    }
+
+    public function population_import(Request $req) {
+        $validate = Validator::make($req->all(),[
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        if($validate->fails()) {
+            
+            return back()
+                    ->with('error_add','Error')
+                    ->withErrors($validate);
+        }
+
+        try {
+            
+            Excel::import(new PopulationImport, $req->file('file'));
+            Alert::success('Success');
+            return back();
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // Birth
     public function birth_index() {
         $data['birth'] = DB::table('birth')->get();

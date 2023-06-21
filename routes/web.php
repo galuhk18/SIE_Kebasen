@@ -40,6 +40,9 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'population_edit'])->name('population.edit');
         Route::put('/edit/{id}', [AdminController::class,'population_update'])->name('population.update');
         Route::get('/destroy/{id}', [AdminController::class,'population_destroy'])->name('population.destroy');
+        Route::get('/export', [AdminController::class,'population_export'])->name('population.export');
+        Route::get('/form/export', [AdminController::class,'population_form_export'])->name('population.form.export');
+        Route::post('/import', [AdminController::class,'population_import'])->name('population.import');
     });
     // Birth
     Route::prefix('birth')->group(function () {
