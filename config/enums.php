@@ -25,25 +25,25 @@
             'Keterangan ahli waris'
         ],
         'funding_petition_status' => [
-            'waiting_approval',
-            'approval',
-            'rejected'
+            'menunggu_persetujuan',
+            'disetujui',
+            'ditolak'
         ],
         'activity_report_status' => [
-            'waiting_approval',
-            'approval',
-            'rejected'
+            'menunggu_persetujuan',
+            'disetujui',
+            'ditolak'
         ],
         'rental_status' => [
-            'waiting_approval',
-            'approval',
-            'rejected',
-            'finished'
+            'menunggu_persetujuan',
+            'disetujui',
+            'ditolak',
+            'selesai'
         ],
         'compensation_status' => [
-            'waiting_approval',
-            'approval',
-            'rejected',
+            'menunggu_persetujuan',
+            'disetujui',
+            'ditolak',
         ]
     ];
 ?>

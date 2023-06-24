@@ -22,6 +22,43 @@ class AdminController extends Controller
         $data['facility_amount'] = DB::table('facility')->count();
         $data['decision_amount'] = DB::table('decision')->count();
         $data['birth_death_amount'] = DB::table('birth')->count() + DB::table('death')->count();
+
+        $year_now = Carbon::now()->year;
+        $month_name = ["Januari", "Feburari", "Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+        // Funding Petition
+        $funding_petition = DB::table('funding_petition')
+                                ->selectRaw('month(created_at) as month, sum(budget_amount) as budget_amount,count(*) as amount')
+                                ->groupByRaw('month(created_at)')
+                                ->where('status',1)
+                                ->whereYear('created_at', $year_now)
+                                ->get();
+        
+        $fp = [];
+        $fb = [];
+        foreach($funding_petition as $fu) {
+            $fp['label'][] = $month_name[$fu->month];
+            $fp['data'][] = (int) $fu->amount;
+
+            $fb['label'][] = $month_name[$fu->month];
+            $fb['data'][] = (int) $fu->budget_amount;
+        }
+        
+        $data['chart_funding_petition_amount'] = json_encode($fp);
+        $data['chart_funding_petition_budget_amount'] = json_encode($fb);
+
+        // Birth and Death
+
+        $birth = DB::table('birth')->count();
+        $death = DB::table('death')->count();
+
+        $bd = [
+            "label" => ["kelahiran","kematian"],
+            "data" => [$birth, $death]
+        ];
+
+        $data['chart_birth_death'] = json_encode($bd);
+
+        $data['year'] = $year_now;
         return view('admin.index', $data);
     }
 
