@@ -97,43 +97,71 @@
     </div>
 </div>
 
-<div class="row mt-2">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
+@if (session()->has('executive_id'))    
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
 
-                <canvas id="chart-funding-petition-amount"></canvas>
+                    <canvas id="chart-funding-petition-amount"></canvas>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
 
-                <canvas id="chart-funding-petition-budget-amount"></canvas>
+                    <canvas id="chart-funding-petition-budget-amount"></canvas>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row mt-2">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <canvas id="chart-birth-death"></canvas>
+
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <canvas id="chart-building-rental"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <canvas id="chart-facility-rental"></canvas>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="row mt-2">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="chart-birth-death"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 @endsection
+@if (session()->has('executive_id'))    
 @section('script')
 <script src="{{ asset('assets/vendor/chart.js/Chart.min.js') }}"></script>
 <script>
     var cData1 = JSON.parse(`<?php echo $chart_funding_petition_amount; ?>`);
     var cData2 = JSON.parse(`<?php echo $chart_funding_petition_budget_amount; ?>`);
     var cData3 = JSON.parse(`<?php echo $chart_birth_death; ?>`);
+    var cData4 = JSON.parse(`<?php echo $chart_building_rental; ?>`);
+    var cData5 = JSON.parse(`<?php echo $chart_facility_rental; ?>`);
     var ctx1 = $("#chart-funding-petition-amount");
     var ctx2 = $("#chart-funding-petition-budget-amount");
     var ctx3 = $("#chart-birth-death");
+    var ctx4 = $("#chart-building-rental");
+    var ctx5 = $("#chart-facility-rental");
 
     var data1 = {
         labels: cData1.label,
@@ -241,6 +269,98 @@
         }]
     };
 
+    var data4 = {
+        labels: cData4.label,
+        datasets: [{
+            label: "Jumlah Penyewaan Gedung",
+            data: cData4.data,
+
+            backgroundColor: [
+                '#f6c23e',
+                '#1cc88a',
+                '#20c9a6',
+                '#36b9cc',
+                '#858796',
+                '#5a5c69',
+                '#091734',
+                '#FA9044',
+                '#e74a3b',
+                '#4e73df',
+                '#6610f2',
+                '#6f42c1',
+                '#e83e8c',
+                '#e74a3b',
+                '#fd7e14'
+                
+            ],
+            borderColor: [
+                '#f6c23e',
+                '#1cc88a',
+                '#20c9a6',
+                '#36b9cc',
+                '#858796',
+                '#5a5c69',
+                '#091734',
+                '#FA9044',
+                '#e74a3b',
+                '#4e73df',
+                '#6610f2',
+                '#6f42c1',
+                '#e83e8c',
+                '#e74a3b',
+                '#fd7e14'
+                
+            ],
+            borderWidth: [1, 1, 1, 1, 1, 1, 1]
+        }]
+    };
+
+    var data5 = {
+        labels: cData5.label,
+        datasets: [{
+            label: "Jumlah Penyewaan Fasilitas",
+            data: cData5.data,
+
+            backgroundColor: [
+                '#f6c23e',
+                '#1cc88a',
+                '#20c9a6',
+                '#36b9cc',
+                '#858796',
+                '#5a5c69',
+                '#091734',
+                '#FA9044',
+                '#e74a3b',
+                '#4e73df',
+                '#6610f2',
+                '#6f42c1',
+                '#e83e8c',
+                '#e74a3b',
+                '#fd7e14'
+                
+            ],
+            borderColor: [
+                '#f6c23e',
+                '#1cc88a',
+                '#20c9a6',
+                '#36b9cc',
+                '#858796',
+                '#5a5c69',
+                '#091734',
+                '#FA9044',
+                '#e74a3b',
+                '#4e73df',
+                '#6610f2',
+                '#6f42c1',
+                '#e83e8c',
+                '#e74a3b',
+                '#fd7e14'
+                
+            ],
+            borderWidth: [1, 1, 1, 1, 1, 1, 1]
+        }]
+    };
+
     var options1 = {
         responsive: true,
         title: {
@@ -322,6 +442,44 @@
         }
     };
 
+    var options4 = {
+        responsive: true,
+        title: {
+            display: true,
+            position: "top",
+            text: "Grafik Penyewaan Gedung",
+            fontSize: 18,
+            fontColor: "#111"
+        },
+        legend: {
+            display: true,
+            position: "bottom",
+            labels: {
+                fontColor: "#333",
+                fontSize: 16
+            }
+        }
+    };
+
+    var options5 = {
+        responsive: true,
+        title: {
+            display: true,
+            position: "top",
+            text: "Grafik Penyewaan Fasilitas",
+            fontSize: 18,
+            fontColor: "#111"
+        },
+        legend: {
+            display: true,
+            position: "bottom",
+            labels: {
+                fontColor: "#333",
+                fontSize: 16
+            }
+        }
+    };
+
     var chart1 = new Chart(ctx1, {
         type: "bar",
         data: data1,
@@ -340,5 +498,18 @@
         options: options3
     });
 
+    var chart4 = new Chart(ctx4, {
+        type: "bar",
+        data: data4,
+        options: options4
+    });
+
+    var chart5 = new Chart(ctx5, {
+        type: "bar",
+        data: data5,
+        options: options5
+    });
+
 </script>
 @endsection
+@endif

@@ -12,6 +12,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PopulationExport;
 use App\Exports\FormPopulationExport;
 use App\Imports\PopulationImport;
+use App\Exports\BirthExport;
+use App\Exports\FormBirthExport;
+use App\Imports\BirthImport;
+use App\Exports\DeathExport;
+use App\Exports\FormDeathExport;
+use App\Imports\DeathImport;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -57,6 +63,33 @@ class AdminController extends Controller
         ];
 
         $data['chart_birth_death'] = json_encode($bd);
+
+        // Top building rentals
+        $building = DB::table('building_rental')
+                    ->selectRaw('building_code, count(*) amount')
+                    ->where('status',3)
+                    ->groupBy('building_code')
+                    ->orderByDesc('amount')
+                    ->get();
+        $bud = [];
+        foreach($building as $bu) {
+            $bud['label'][] = $bu->building_code;
+            $bud['data'][] = $bu->amount;   
+        }
+        $data['chart_building_rental'] = json_encode($bud);
+        // Top Facility rentals
+        $facility = DB::table('facility_rental')
+                    ->selectRaw('facility_code, count(*) amount')
+                    ->where('status',3)
+                    ->groupBy('facility_code')
+                    ->orderByDesc('amount')
+                    ->get();
+        $fac = [];
+        foreach($facility as $fa) {
+            $fac['label'][] = $fa->facility_code;
+            $fac['data'][] = $fa->amount;   
+        }
+        $data['chart_facility_rental'] = json_encode($fac);
 
         $data['year'] = $year_now;
         return view('admin.index', $data);
@@ -358,7 +391,43 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function birth_export() {
+        $name = 'birth-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new BirthExport, $name);
+    }
 
+    public function birth_form_export() {
+        $name = 'form-birth-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new FormBirthExport, $name);
+    }
+
+    public function birth_import(Request $req) {
+        $validate = Validator::make($req->all(),[
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        if($validate->fails()) {
+            
+            return back()
+                    ->with('error_add','Error')
+                    ->withErrors($validate);
+        }
+
+        try {
+            
+            Excel::import(new BirthImport, $req->file('file'));
+            Alert::success('Success');
+            return back();
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // Death
     public function death_index() {
         $data['death'] = DB::table('death')->get();
@@ -468,7 +537,43 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function death_export() {
+        $name = 'death-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new DeathExport, $name);
+    }
 
+    public function death_form_export() {
+        $name = 'form-death-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new FormDeathExport, $name);
+    }
+
+    public function death_import(Request $req) {
+        $validate = Validator::make($req->all(),[
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        if($validate->fails()) {
+            
+            return back()
+                    ->with('error_add','Error')
+                    ->withErrors($validate);
+        }
+
+        try {
+            
+            Excel::import(new DeathImport, $req->file('file'));
+            Alert::success('Success');
+            return back();
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // Facility
     public function facility_index() {
         $data['facility'] = DB::table('facility')->get();

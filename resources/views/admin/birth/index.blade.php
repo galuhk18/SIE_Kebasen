@@ -11,6 +11,54 @@
                 <h6>Birth</h6>
                 <a href="{{ route('birth.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
             </div>
+            <div>
+                <a href="{{ route('birth.export') }}" class="btn btn-success"> <i
+                        class="fa fa-file-excel"></i> Export</a>
+                @if (session()->has('admin_id'))
+                    
+                
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#importModal">
+                    <i class="fa fa-file-excel"></i> Import
+                </button>
+    
+                <!-- Modal -->
+                <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success">
+                                <h5 class="modal-title text-white" id="exampleModalLabel">Import</h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ route('birth.import') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="file">Upload File Form Excel</label>
+                                    
+                                    <input type="file" name="file" class="form-control">
+                                    <small class="text-danger">*) Format Date of birth : 1997-05-11</small>
+                                    @error('file')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <a href="{{ route('birth.form.export') }}" class="btn-link text-success mt-5">Download Form</a>
+                            </div>
+                            <div class="modal-footer">
+                               
+                                <button type="submit" class="btn btn-success"> <i class="fa fa-upload"></i> Upload</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
             <hr>
             <div class="table-responsive">
                 <table class="table" id="dataTable">

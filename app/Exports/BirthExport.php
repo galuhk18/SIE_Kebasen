@@ -9,24 +9,21 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
-class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths, WithMapping
+class BirthExport implements FromCollection, WithHeadings, WithColumnWidths, WithMapping
 {
+    /**
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
-        return DB::table('population')
+        return DB::table('birth')
                 ->select([
                     'nik',
-                    'family_card',
+                    'no_akta',
                     'name',
                     'gender',
                     'address',
                     'date_of_birth',
-                    'birth_place',
-                    'phone_number',
-                    'religion',
-                    'citizenship',
-                    'married',
-                    'job',
                     'father_name',
                     'mother_name'
                 ])
@@ -37,17 +34,11 @@ class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths
     {
         return [
             'nik',
-            'family_card',
+            'no_akta',
             'name',
             'gender',
             'address',
             'date_of_birth',
-            'birth_place',
-            'phone_number',
-            'religion',
-            'citizenship',
-            'married',
-            'job',
             'father_name',
             'mother_name'
         ];
@@ -64,12 +55,7 @@ class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths
             'F' => 30,
             'G' => 30,
             'H' => 30,
-            'I' => 30,
-            'J' => 30,
-            'K' => 30,
-            'L' => 30,
-            'M' => 30,
-            'N' => 30
+           
         ];
     }
 
@@ -77,20 +63,15 @@ class PopulationExport implements FromCollection, WithHeadings, WithColumnWidths
     {
         return [
             $row->nik,
-            $row->family_card,
+            $row->no_akta,
             $row->name,
             $row->gender,
             $row->address,
             Carbon::parse($row->date_of_birth)->format('Y-m-d'),
-            $row->birth_place,
-            $row->phone_number,
-            $row->religion,
-            $row->citizenship,
-            $row->married,
-            $row->job,
             $row->father_name,
             $row->mother_name
             
         ];
     }
+
 }

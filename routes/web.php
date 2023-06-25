@@ -52,6 +52,9 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'birth_edit'])->name('birth.edit');
         Route::put('/edit/{id}', [AdminController::class,'birth_update'])->name('birth.update');
         Route::get('/destroy/{id}', [AdminController::class,'birth_destroy'])->name('birth.destroy');
+        Route::get('/export', [AdminController::class,'birth_export'])->name('birth.export');
+        Route::get('/form/export', [AdminController::class,'birth_form_export'])->name('birth.form.export');
+        Route::post('/import', [AdminController::class,'birth_import'])->name('birth.import');
     });
     // Death
     Route::prefix('death')->group(function () {
@@ -61,6 +64,9 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'death_edit'])->name('death.edit');
         Route::put('/edit/{id}', [AdminController::class,'death_update'])->name('death.update');
         Route::get('/destroy/{id}', [AdminController::class,'death_destroy'])->name('death.destroy');
+        Route::get('/export', [AdminController::class,'death_export'])->name('death.export');
+        Route::get('/form/export', [AdminController::class,'death_form_export'])->name('death.form.export');
+        Route::post('/import', [AdminController::class,'death_import'])->name('death.import');
     });
     // Decision
     Route::prefix('decision')->group(function () {

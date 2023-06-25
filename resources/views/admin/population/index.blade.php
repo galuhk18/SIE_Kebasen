@@ -28,13 +28,17 @@
         <div class="d-flex justify-content-between">
 
             <h6>Population</h6>
-
+            @if (session()->has('admin_id'))
             <a href="{{ route('population.create') }}" class="btn btn-primary"> <i
                     class="fa fa-plus"></i> Add New</a>
+            @endif
         </div>
         <div>
             <a href="{{ route('population.export') }}" class="btn btn-success"> <i
                     class="fa fa-file-excel"></i> Export</a>
+            @if (session()->has('admin_id'))
+                
+            
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#importModal">
                 <i class="fa fa-file-excel"></i> Import
@@ -75,6 +79,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         <hr>
         <div class="table-responsive">
