@@ -97,11 +97,7 @@
     </li>
 
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('facility.index') }}">
-            <i class="fas fa-building"></i>
-            <span>Facility</span></a>
-    </li>
+    
     
     <div class="sidebar-heading text-dark">
         Profile

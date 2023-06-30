@@ -78,15 +78,6 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/destroy/{id}', [AdminController::class,'decision_destroy'])->name('decision.destroy');
         Route::get('/export', [AdminController::class,'decision_export'])->name('decision.export');
     });
-    // Facility
-    Route::prefix('facility')->group(function () {
-        Route::get('/', [AdminController::class,'facility_index'])->name('facility.index');
-        Route::get('/create', [AdminController::class,'facility_create'])->name('facility.create');
-        Route::post('/create', [AdminController::class,'facility_store'])->name('facility.store');
-        Route::get('/edit/{id}', [AdminController::class,'facility_edit'])->name('facility.edit');
-        Route::put('/edit/{id}', [AdminController::class,'facility_update'])->name('facility.update');
-        Route::get('/destroy/{id}', [AdminController::class,'facility_destroy'])->name('facility.destroy');
-    });
     // Service
     Route::prefix('service')->group(function () {
         Route::get('/', [AdminController::class,'service_index'])->name('service.index');
