@@ -4,19 +4,92 @@
     <title>{{ env('APP_NAME')  }} | Activity</title>
 @endsection
 @section('content')
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Laporan Jadwal Kegiatan
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $activity_amount }}</div>
+                    </div>
+                    <div class="col-auto">
+                        
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
                 <h6>Activity</h6>
+                @if(session()->has('admin_id'))
                 <a href="{{ route('activity.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                @endif
+            </div>
+            <div>
+                <a href="{{ route('activity.export') }}" class="btn btn-success"> <i
+                        class="fa fa-file-excel"></i> Export</a>
+                @if(session()->has('admin_id'))
+    
+    
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#importModal">
+                        <i class="fa fa-file-excel"></i> Import
+                    </button>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success">
+                                    <h5 class="modal-title text-white" id="exampleModalLabel">Import</h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('activity.import') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="file">Upload File Form Excel</label>
+    
+                                            <input type="file" name="file" class="form-control">
+                                            <small class="text-danger">*) Format Date of activity : 1997-05-11</small>
+                                            @error('file')
+                                                <div class="text-danger">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <a href="{{ route('activity.form.export') }}"
+                                            class="btn-link text-success mt-5">Download Form</a>
+                                    </div>
+                                    <div class="modal-footer">
+    
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-upload"></i>
+                                            Upload</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
             <hr>
             <div class="table-responsive">
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">Name</th>
+                            <th class="text-center">Activity Name</th>
                             <th class="text-center">Date of Activity</th>
                             <th class="text-center">Address</th>
                             <th class="text-center">Information</th>

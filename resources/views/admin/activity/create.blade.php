@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Activity Name</label>
                         <input type="text" name="name" class="form-control">
                         @error('name')
                             <div class="text-danger">

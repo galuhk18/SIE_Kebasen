@@ -54,7 +54,7 @@ class BirthExport implements FromCollection, WithHeadings, WithColumnWidths, Wit
             'E' => 30,
             'F' => 30,
             'G' => 30,
-            'H' => 30,
+            'H' => 30
            
         ];
     }

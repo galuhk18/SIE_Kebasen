@@ -76,6 +76,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'decision_edit'])->name('decision.edit');
         Route::put('/edit/{id}', [AdminController::class,'decision_update'])->name('decision.update');
         Route::get('/destroy/{id}', [AdminController::class,'decision_destroy'])->name('decision.destroy');
+        Route::get('/export', [AdminController::class,'decision_export'])->name('decision.export');
     });
     // Facility
     Route::prefix('facility')->group(function () {
@@ -94,6 +95,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'service_edit'])->name('service.edit');
         Route::put('/edit/{id}', [AdminController::class,'service_update'])->name('service.update');
         Route::get('/destroy/{id}', [AdminController::class,'service_destroy'])->name('service.destroy');
+        Route::get('/export', [AdminController::class,'service_export'])->name('service.export');
     });
     // Activity
     Route::prefix('activity')->group(function () {
@@ -103,6 +105,9 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'activity_edit'])->name('activity.edit');
         Route::put('/edit/{id}', [AdminController::class,'activity_update'])->name('activity.update');
         Route::get('/destroy/{id}', [AdminController::class,'activity_destroy'])->name('activity.destroy');
+        Route::get('/export', [AdminController::class,'activity_export'])->name('activity.export');
+        Route::get('/form/export', [AdminController::class,'activity_form_export'])->name('activity.form.export');
+        Route::post('/import', [AdminController::class,'activity_import'])->name('activity.import');
     });
     // Funding Petition
     Route::prefix('funding/petition')->group(function () {
@@ -112,6 +117,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'funding_petition_edit'])->name('funding.petition.edit');
         Route::put('/edit/{id}', [AdminController::class,'funding_petition_update'])->name('funding.petition.update');
         Route::get('/destroy/{id}', [AdminController::class,'funding_petition_destroy'])->name('funding.petition.destroy');
+        Route::get('/export', [AdminController::class,'funding_petition_export'])->name('funding.petition.export');
     });
     // Activity Report
     Route::prefix('activity/report')->group(function () {
@@ -121,6 +127,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'activity_report_edit'])->name('activity.report.edit');
         Route::put('/edit/{id}', [AdminController::class,'activity_report_update'])->name('activity.report.update');
         Route::get('/destroy/{id}', [AdminController::class,'activity_report_destroy'])->name('activity.report.destroy');
+        Route::get('/export', [AdminController::class,'activity_report_export'])->name('activity.report.export');
     });
     // Building Management
     Route::prefix('building/management')->group(function () {

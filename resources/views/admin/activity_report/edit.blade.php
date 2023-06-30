@@ -74,10 +74,11 @@
                         @enderror
                     </div>
                    
+                    @if (session()->has('executtive_id'))
                     <div class="form-group">
                         <label for="status">status</label>
                         <select name="status" class="custom-select">
-                            <option value=""></option>
+                            
                             @foreach ($activity_report_status as $index => $item)
                                 
                             <option value="{{ $index }}" {{ ($activity_report->status == $index) ? "selected" : "" }}>{{ $item }}</option>
@@ -89,7 +90,7 @@
                             </div>
                         @enderror
                     </div>
-                    
+                    @endif
 
 
                 </div>

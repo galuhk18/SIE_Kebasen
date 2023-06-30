@@ -18,6 +18,13 @@ use App\Imports\BirthImport;
 use App\Exports\DeathExport;
 use App\Exports\FormDeathExport;
 use App\Imports\DeathImport;
+use App\Exports\ServiceExport;
+use App\Exports\DecisionExport;
+use App\Exports\ActivityExport;
+use App\Exports\FormActivityExport;
+use App\Imports\ActivityImport;
+use App\Exports\FundingPetitionExport;
+use App\Exports\ActivityReportExport;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -279,6 +286,7 @@ class AdminController extends Controller
     // Birth
     public function birth_index() {
         $data['birth'] = DB::table('birth')->get();
+        $data['birth_amount'] = DB::table('birth')->count();
         return view('admin.birth.index', $data);
     }
 
@@ -431,6 +439,7 @@ class AdminController extends Controller
     // Death
     public function death_index() {
         $data['death'] = DB::table('death')->get();
+        $data['death_amount'] = DB::table('death')->count();
         return view('admin.death.index', $data);
     }
 
@@ -671,6 +680,7 @@ class AdminController extends Controller
     // Decision
     public function decision_index() {
         $data['decision'] = DB::table('decision')->get();
+        $data['decision_amount'] = DB::table('decision')->count();
         
         return view('admin.decision.index', $data);
     }
@@ -803,9 +813,16 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function decision_export() {
+        $name = 'decision-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new DecisionExport, $name);
+    }
     // Service
     public function service_index() {
         $data['service'] = DB::table('service')->get();
+        $data['service_amount'] = DB::table('service')->count();
         
         return view('admin.service.index', $data);
     }
@@ -903,9 +920,16 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function service_export() {
+        $name = 'service-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new ServiceExport, $name);
+    }
     // Activity
     public function activity_index() {
         $data['activity'] = DB::table('activity')->get();
+        $data['activity_amount'] = DB::table('activity')->count();
         return view('admin.activity.index', $data);
     }
 
@@ -996,9 +1020,52 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function activity_export() {
+        $name = 'activity-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new ActivityExport, $name);
+    }
+
+    public function activity_form_export() {
+        $name = 'form-activity-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new FormActivityExport, $name);
+    }
+
+    public function activity_import(Request $req) {
+        $validate = Validator::make($req->all(),[
+            'file' => 'required|mimes:xlsx',
+        ]);
+
+        if($validate->fails()) {
+            
+            return back()
+                    ->with('error_add','Error')
+                    ->withErrors($validate);
+        }
+
+        try {
+            
+            Excel::import(new ActivityImport, $req->file('file'));
+            Alert::success('Success');
+            return back();
+        } catch (\Exception $e) {
+            //throw $th;
+            Alert::error($e->getMessage());
+            return back();
+        }
+    }
     // Funding Petition
     public function funding_petition_index() {
         $data['funding_petition'] = DB::table('funding_petition')->get();
+        $data['funding_petition_amount'] = DB::table('funding_petition')->count();
+        $data['funding_petition_amount_status'] = [
+            DB::table('funding_petition')->where('status',0)->count(),
+            DB::table('funding_petition')->where('status',1)->count(),
+            DB::table('funding_petition')->where('status',2)->count(),
+        ];
         $data['funding_petition_status'] = Config::get('enums.funding_petition_status');
         return view('admin.funding_petition.index', $data);
     }
@@ -1060,7 +1127,7 @@ class AdminController extends Controller
             'event_name' => 'required',
             'person_responsible' => 'required',
             'proposal' => 'file|mimes:pdf|max:2048',
-            'status' => 'required'
+          
         ]);
         try {
 
@@ -1068,32 +1135,59 @@ class AdminController extends Controller
                 $extFile = $req->proposal->getClientOriginalExtension();
                 $namaFile = 'proposal-'.time().".".$extFile;
                 $path = $req->proposal->move('pdf/funding_petition', $namaFile);
+                if ($req->status) {
 
-                DB::table('funding_petition')
-                ->where('id', $id)
-                ->update([
-                    'date_of_activity' => $req->date_of_activity,
-                    'organization_name' => $req->organization_name,
-                    'budget_amount' => $req->budget_amount,
-                    'event_name' => $req->event_name,
-                    'person_responsible' => $req->person_responsible,
-                    'proposal' => $path,
-                    'status' => $req->status,
-                    'updated_at' => Carbon::now()
-                ]);
+                    DB::table('funding_petition')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'budget_amount' => $req->budget_amount,
+                        'event_name' => $req->event_name,
+                        'person_responsible' => $req->person_responsible,
+                        'proposal' => $path,
+                        'status' => $req->status,
+                        'updated_at' => Carbon::now()
+                    ]);
+                } else {
+                    DB::table('funding_petition')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'budget_amount' => $req->budget_amount,
+                        'event_name' => $req->event_name,
+                        'person_responsible' => $req->person_responsible,
+                        'proposal' => $path,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
             } else {
-
-                DB::table('funding_petition')
-                ->where('id', $id)
-                ->update([
-                    'date_of_activity' => $req->date_of_activity,
-                    'organization_name' => $req->organization_name,
-                    'budget_amount' => $req->budget_amount,
-                    'event_name' => $req->event_name,
-                    'person_responsible' => $req->person_responsible,
-                    'status' => $req->status,
-                    'updated_at' => Carbon::now()
-                ]);
+                if ($req->status) {
+                
+                    DB::table('funding_petition')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'budget_amount' => $req->budget_amount,
+                        'event_name' => $req->event_name,
+                        'person_responsible' => $req->person_responsible,
+                        'status' => $req->status,
+                        'updated_at' => Carbon::now()
+                    ]);
+                } else {
+                    DB::table('funding_petition')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'budget_amount' => $req->budget_amount,
+                        'event_name' => $req->event_name,
+                        'person_responsible' => $req->person_responsible,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
             }
     
             Alert::success('Success');
@@ -1127,9 +1221,21 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function funding_petition_export() {
+        $name = 'funding_petition-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new FundingPetitionExport, $name);
+    }
     // Activity Report
     public function activity_report_index() {
         $data['activity_report'] = DB::table('activity_report')->get();
+        $data['activity_report_amount'] = DB::table('activity_report')->count();
+        $data['activity_report_amount_status'] = [
+            DB::table('activity_report')->where('status',0)->count(),
+            DB::table('activity_report')->where('status',1)->count(),
+            DB::table('activity_report')->where('status',2)->count(),
+        ];
         $data['activity_report_status'] = Config::get('enums.activity_report_status');
         return view('admin.activity_report.index', $data);
     }
@@ -1188,7 +1294,6 @@ class AdminController extends Controller
             'information' => 'required',
             'person_responsible' => 'required',
             'documentation' => 'max:1000|file|mimes:png,jpeg,jpg',
-            'status' => 'required'
         ]);
 
         try {
@@ -1198,29 +1303,55 @@ class AdminController extends Controller
                 $namaFile = 'documentation-'.time().".".$extFile;
                 $path = $req->documentation->move('activity_report/documentation', $namaFile);
 
-                DB::table('activity_report')
-                ->where('id', $id)
-                ->update([
-                    'date_of_activity' => $req->date_of_activity,
-                    'organization_name' => $req->organization_name,
-                    'information' => $req->information,
-                    'person_responsible' => $req->person_responsible,
-                    'documentation' => $path,
-                    'status' => $req->status,
-                    'updated_at' => Carbon::now()
-                ]);
-            } else {
+                if($req->status) {
 
-                DB::table('activity_report')
-                ->where('id', $id)
-                ->update([
-                    'date_of_activity' => $req->date_of_activity,
-                    'organization_name' => $req->organization_name,
-                    'information' => $req->information,
-                    'person_responsible' => $req->person_responsible,
-                    'status' => $req->status,
-                    'updated_at' => Carbon::now()
-                ]);
+                    DB::table('activity_report')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'information' => $req->information,
+                        'person_responsible' => $req->person_responsible,
+                        'documentation' => $path,
+                        'status' => $req->status,
+                        'updated_at' => Carbon::now()
+                    ]);
+                } else {
+                    DB::table('activity_report')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'information' => $req->information,
+                        'person_responsible' => $req->person_responsible,
+                        'documentation' => $path,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
+            } else {
+                if($req->status) {
+
+                    DB::table('activity_report')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'information' => $req->information,
+                        'person_responsible' => $req->person_responsible,
+                        'status' => $req->status,
+                        'updated_at' => Carbon::now()
+                    ]);
+                } else {
+                    DB::table('activity_report')
+                    ->where('id', $id)
+                    ->update([
+                        'date_of_activity' => $req->date_of_activity,
+                        'organization_name' => $req->organization_name,
+                        'information' => $req->information,
+                        'person_responsible' => $req->person_responsible,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
             }
     
             Alert::success('Success');
@@ -1254,6 +1385,13 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function activity_report_export() {
+        $name = 'activity_report-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new ActivityReportExport, $name);
+    }
+
     // Building Management
     public function building_management_index() {
         $data['building_management'] = DB::table('building_management')->get();
