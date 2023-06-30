@@ -25,6 +25,8 @@ use App\Exports\FormActivityExport;
 use App\Imports\ActivityImport;
 use App\Exports\FundingPetitionExport;
 use App\Exports\ActivityReportExport;
+use App\Exports\BuildingManagementExport;
+use App\Exports\FacilityManagementExport;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -1301,6 +1303,7 @@ class AdminController extends Controller
     // Building Management
     public function building_management_index() {
         $data['building_management'] = DB::table('building_management')->get();
+        $data['building_management_amount'] = DB::table('building_management')->count();
        
         return view('admin.building_management.index', $data);
     }
@@ -1416,9 +1419,17 @@ class AdminController extends Controller
             return back();
         }
     }
+
+    public function building_management_export() {
+        $name = 'building_management-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new BuildingManagementExport, $name);
+    }
     // Facility Management
     public function facility_management_index() {
         $data['facility_management'] = DB::table('facility_management')->get();
+        $data['facility_management_amount'] = DB::table('facility_management')->count();
        
         return view('admin.facility_management.index', $data);
     }
@@ -1537,6 +1548,12 @@ class AdminController extends Controller
             Alert::error($e->getMessage());
             return back();
         }
+    }
+    public function facility_management_export() {
+        $name = 'facility_management-';
+        $name .= Carbon::now();
+        $name .= '.xlsx';
+        return Excel::download(new FacilityManagementExport, $name);
     }
     // Building Rental
     public function building_rental_index() {

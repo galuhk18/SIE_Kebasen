@@ -4,12 +4,38 @@
     <title>{{ env('APP_NAME')  }} | Facility Management</title>
 @endsection
 @section('content')
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Laporan Manajemen Fasilitas
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $facility_management_amount }}</div>
+                    </div>
+                    <div class="col-auto">
+                        
+                        <i class="fas fa-building fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
                 <h6>Facility Management</h6>
+                @if(session()->has('admin_id'))
                 <a href="{{ route('facility.management.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                @endif
+            </div>
+            <div>
+                <a href="{{ route('facility.management.export') }}" class="btn btn-success"> <i class="fa fa-file-excel"></i>
+                    Export</a>
             </div>
             <hr>
             <div class="table-responsive">
