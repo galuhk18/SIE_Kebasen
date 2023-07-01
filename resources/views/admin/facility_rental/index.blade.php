@@ -4,13 +4,62 @@
     <title>{{ env('APP_NAME')  }} | Facility Rental</title>
 @endsection
 @section('content')
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Laporan Penyewaan Fasilitas
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $facility_rental_amount }}</div>
+                    </div>
+                    <div class="col-auto">
+
+                        <i class="fas fa-book fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+</div>
+<div class="row">
+    @foreach ($facility_rental_amount_status as $index => $item)
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                {{ $rental_status[$index] }}
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $item }}</div>
+                        </div>
+                        <div class="col-auto">
+
+                            <i class="fas fa-book fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
                 <h6>Facility Rental</h6>
+                @if (session()->has('admin_id'))
                 <a href="{{ route('facility.rental.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                @endif
             </div>
+            <a href="{{ route('facility.rental.export') }}" class="btn btn-success"> <i
+                class="fa fa-file-excel"></i> Export</a>
             <hr>
             <div class="table-responsive">
                 <table class="table" id="dataTable">

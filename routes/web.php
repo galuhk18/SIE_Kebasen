@@ -148,6 +148,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'building_rental_edit'])->name('building.rental.edit');
         Route::put('/edit/{id}', [AdminController::class,'building_rental_update'])->name('building.rental.update');
         Route::get('/destroy/{id}', [AdminController::class,'building_rental_destroy'])->name('building.rental.destroy');
+        Route::get('/export', [AdminController::class,'building_rental_export'])->name('building.rental.export');
     });
     // Facility Rental
     Route::prefix('facility/rental')->group(function () {
@@ -157,6 +158,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'facility_rental_edit'])->name('facility.rental.edit');
         Route::put('/edit/{id}', [AdminController::class,'facility_rental_update'])->name('facility.rental.update');
         Route::get('/destroy/{id}', [AdminController::class,'facility_rental_destroy'])->name('facility.rental.destroy');
+        Route::get('/export', [AdminController::class,'facility_rental_export'])->name('facility.rental.export');
     });
     // Facility Compensation
     Route::prefix('facility/compensation')->group(function () {
@@ -166,6 +168,7 @@ Route::prefix('dashboard')->middleware('auth.admin')->group(function () {
         Route::get('/edit/{id}', [AdminController::class,'facility_compensation_edit'])->name('facility.compensation.edit');
         Route::put('/edit/{id}', [AdminController::class,'facility_compensation_update'])->name('facility.compensation.update');
         Route::get('/destroy/{id}', [AdminController::class,'facility_compensation_destroy'])->name('facility.compensation.destroy');
+        Route::get('/export', [AdminController::class,'facility_compensation_export'])->name('facility.compensation.export');
     });
     // User Executive
     Route::prefix('user/executive')->group(function () {

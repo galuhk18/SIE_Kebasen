@@ -83,11 +83,11 @@
                             </div>
                         @enderror
                     </div>
-
+                    @if (session()->has('executive_id'))
                     <div class="form-group">
                         <label for="status">status</label>
                         <select name="status" class="custom-select">
-                            <option value=""></option>
+                            
                             @foreach ($compensation_status as $index => $item)
                                 
                             <option value="{{ $index }}" {{ ($facility_compensation->status == $index) ? "selected" : "" }}>{{ $item }}</option>
@@ -99,7 +99,7 @@
                             </div>
                         @enderror
                     </div>
-
+                    @endif
                 </div>
             </div>
 

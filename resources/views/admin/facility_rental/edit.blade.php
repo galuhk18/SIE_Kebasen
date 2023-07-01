@@ -100,7 +100,7 @@
                             </div>
                         @enderror
                     </div>
-
+                    @if (session()->has('executive_id'))
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select name="status" class="custom-select" id="status">
@@ -115,7 +115,7 @@
                             </div>
                         @enderror
                     </div>
-
+                    @endif
                 </div>
             </div>
 
