@@ -38,7 +38,7 @@ class AdminController extends Controller
     public function index()
     {
         $data['population_amount'] = DB::table('population')->count();
-        $data['facility_amount'] = DB::table('facility')->count();
+        $data['service_amount'] = DB::table('service')->count();
         $data['decision_amount'] = DB::table('decision')->count();
         $data['birth_death_amount'] = DB::table('birth')->count() + DB::table('death')->count();
 

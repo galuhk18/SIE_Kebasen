@@ -30,7 +30,7 @@
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Laporan Pelayanan Desa
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $facility_amount }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $service_amount }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-file-alt fa-2x text-gray-300"></i>
