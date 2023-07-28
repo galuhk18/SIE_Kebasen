@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME')  }} | Facility Rental</title>
+    <title>{{ env('APP_NAME')  }} | Sewa Fasilitas</title>
 @endsection
 @section('content')
 <div class="row">
@@ -55,7 +55,7 @@
 
                 <h6>Facility Rental</h6>
                 @if (session()->has('admin_id'))
-                <a href="{{ route('facility.rental.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('facility.rental.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <a href="{{ route('facility.rental.export') }}" class="btn btn-success"> <i
@@ -65,13 +65,13 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">facility_code</th>
-                            <th class="text-center">facility_name</th>
-                            <th class="text-center">amount</th>
-                            <th class="text-center">start_date</th>
-                            <th class="text-center">end_date</th>
-                            <th class="text-center">person_responsible</th>
-                            <th class="text-center">telp</th>
+                            <th class="text-center">Kode Fasilitas</th>
+                            <th class="text-center">Nama Fasilitas</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Tanggal Mulai</th>
+                            <th class="text-center">Tanggal Selesai</th>
+                            <th class="text-center">Penanggung Jawab</th>
+                            <th class="text-center">Nomor HP</th>
                             <th class="text-center">status</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>

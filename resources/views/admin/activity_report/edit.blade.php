@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Edit Activity Report</h6>
+        <h6>Edit Laporan Kegiatan</h6>
         <hr>
         <form action="{{ route('activity.report.update',['id' => $activity_report->id]) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
@@ -16,7 +16,7 @@
                     
 
                     <div class="form-group">
-                        <label for="date_of_activity">Date of Activity</label>
+                        <label for="date_of_activity">Tanggal Kegiatan</label>
                         <input type="date" name="date_of_activity" class="form-control" value="{{ $activity_report->date_of_activity }}">
                         @error('date_of_activity')
                             <div class="text-danger">
@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="organization_name">organization_name</label>
+                        <label for="organization_name">Nama Organisasi</label>
                         <input type="text" name="organization_name" class="form-control" value="{{ $activity_report->organization_name }}">
                         @error('organization_name')
                             <div class="text-danger">
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="information">information</label>
+                        <label for="information">Keterangan</label>
                         <input type="text" name="information" class="form-control" value="{{ $activity_report->information }}">
                         @error('information')
                             <div class="text-danger">
@@ -54,7 +54,7 @@
 
                     
                     <div class="form-group">
-                        <label for="person_responsible">person_responsible</label>
+                        <label for="person_responsible">Penanggung Jawab</label>
                         <input type="text" name="person_responsible" class="form-control" value="{{ $activity_report->person_responsible }}">
                         @error('person_responsible')
                             <div class="text-danger">
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="documentation">documentation</label>
+                        <label for="documentation">Dokumentasi</label>
                         <br>
                         <img id="img-preview" width="200px" src="{{ asset($activity_report->documentation) }}" class="img-thumbnail mb-2" alt="">
 
@@ -76,7 +76,7 @@
                    
                     @if (session()->has('executtive_id'))
                     <div class="form-group">
-                        <label for="status">status</label>
+                        <label for="status">Status</label>
                         <select name="status" class="custom-select">
                             
                             @foreach ($activity_report_status as $index => $item)

@@ -28,9 +28,9 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
-                <h6>Decision</h6>
+                <h6>Data Keputusan</h6>
                 @if(session()->has('admin_id'))
-                <a href="{{ route('decision.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('decision.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <div>
@@ -42,12 +42,12 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">Decision</th>
-                            <th class="text-center">type_of_decision</th>
-                            <th class="text-center">problem</th>
-                            <th class="text-center">decision_date</th>
-                            <th class="text-center">documentasion</th>
-                            <th class="text-center">realization_date</th>
+                            <th class="text-center">Keputusan</th>
+                            <th class="text-center">Jenis Keputusan</th>
+                            <th class="text-center">Permasalahan</th>
+                            <th class="text-center">Tanggal Keputusan</th>
+                            <th class="text-center">Dokumentasi</th>
+                            <th class="text-center">Tanggal Realisasi</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>
                             <th class="text-center"><i class="fa fa-cogs"></i></th>

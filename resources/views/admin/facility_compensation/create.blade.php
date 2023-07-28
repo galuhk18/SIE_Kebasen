@@ -1,12 +1,12 @@
 @extends('template.base_admin')
 
 @section('title')
-<title>{{ env('APP_NAME') }} | Facility Compensation</title>
+<title>{{ env('APP_NAME') }} | Informasi Ganti Rugi</title>
 @endsection
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Facility Compensation</h6>
+        <h6>Tambah Data Informasi Ganti Rugi</h6>
         <hr>
         <form action="{{ route('facility.compensation.store') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -17,7 +17,7 @@
                     
 
                     <div class="form-group">
-                        <label for="facility_name">Facility Name</label>
+                        <label for="facility_name">Nama Barang</label>
                         <input type="text" name="facility_name" class="form-control">
                         @error('facility_name')
                             <div class="text-danger">
@@ -27,7 +27,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="amount">amount</label>
+                        <label for="amount">Jumlah</label>
                         <input type="number" name="amount" class="form-control">
                         @error('amount')
                             <div class="text-danger">
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="amount_compensation">amount_compensation</label>
+                        <label for="amount_compensation">Nominal</label>
                         <input type="number" name="amount_compensation" class="form-control">
                         @error('amount_compensation')
                             <div class="text-danger">
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="picture">picture</label>
+                        <label for="picture">Dokumentasi</label>
                         <br>
                         <img id="img-preview" width="200px" class="img-thumbnail mb-2" alt="">
 
@@ -63,7 +63,7 @@
                     
                     
                     <div class="form-group">
-                        <label for="person_responsible">person_responsible</label>
+                        <label for="person_responsible">Penanggung Jawab</label>
                         <input type="text" name="person_responsible" class="form-control">
                         @error('person_responsible')
                             <div class="text-danger">
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="telp">telp</label>
+                        <label for="telp">Nomor HP</label>
                         <input type="tel" name="telp" class="form-control">
                         @error('telp')
                             <div class="text-danger">
@@ -88,7 +88,7 @@
 
             <div class="d-flex justify-content-end">
 
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
             </div>
         </form>
     </div>

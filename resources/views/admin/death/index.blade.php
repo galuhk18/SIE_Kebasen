@@ -31,7 +31,7 @@
             <h6>Death</h6>
             @if(session()->has('admin_id'))
             <a href="{{ route('death.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i>
-                Add New</a>
+                Tambah</a>
             @endif
         </div>
         <div>
@@ -91,12 +91,12 @@
                 <thead>
                     <tr>
                         <th class="text-center">NIK</th>
-                        <th class="text-center">Family Card / KK</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Address</th>
-                        <th class="text-center">Date of death</th>
-                        <th class="text-center">Informer</th>
-                        <th class="text-center">Informer Status</th>
+                        <th class="text-center">Nomor KK</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Alamat</th>
+                        <th class="text-center">Tanggal Kematian</th>
+                        <th class="text-center">Pelapor</th>
+                        <th class="text-center">Status Pelapor</th>
                         <th class="text-center">Created</th>
                         <th class="text-center">Updated</th>
                         <th class="text-center"><i class="fa fa-cogs"></i></th>

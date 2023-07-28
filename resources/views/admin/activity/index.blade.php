@@ -28,9 +28,9 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
-                <h6>Activity</h6>
+                <h6>Jadwal Kegiatan</h6>
                 @if(session()->has('admin_id'))
-                <a href="{{ route('activity.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('activity.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <div>
@@ -89,10 +89,10 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">Activity Name</th>
-                            <th class="text-center">Date of Activity</th>
-                            <th class="text-center">Address</th>
-                            <th class="text-center">Information</th>
+                            <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Tanggal Kegiatan</th>
+                            <th class="text-center">Tempat</th>
+                            <th class="text-center">Keterangan</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>
                             <th class="text-center"><i class="fa fa-cogs"></i></th>

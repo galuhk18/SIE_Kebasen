@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-<title>{{ env('APP_NAME') }} | Population</title>
+<title>{{ env('APP_NAME') }} | Data Penduduk</title>
 @endsection
 @section('content')
 <div class="row">
@@ -30,7 +30,7 @@
             <h6>Population</h6>
             @if (session()->has('admin_id'))
             <a href="{{ route('population.create') }}" class="btn btn-primary"> <i
-                    class="fa fa-plus"></i> Add New</a>
+                    class="fa fa-plus"></i> Tambah</a>
             @endif
         </div>
         <div>
@@ -87,19 +87,19 @@
                 <thead>
                     <tr>
                         <th class="text-center">NIK</th>
-                        <th class="text-center">Familiy Card / KK</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Gender</th>
-                        <th class="text-center">Address</th>
-                        <th class="text-center">Birth Place</th>
-                        <th class="text-center">Date of Birth</th>
-                        <th class="text-center">Phone Mumber</th>
-                        <th class="text-center">Religion</th>
-                        <th class="text-center">Citizenship</th>
-                        <th class="text-center">Married</th>
-                        <th class="text-center">Job</th>
-                        <th class="text-center">Father name</th>
-                        <th class="text-center">Mother name</th>
+                        <th class="text-center">Nomor KK</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Jenis Kelamin</th>
+                        <th class="text-center">Alamat</th>
+                        <th class="text-center">Tanggal Lahir</th>
+                        <th class="text-center">Tempat Lahir</th>
+                        <th class="text-center">Nomor HP</th>
+                        <th class="text-center">Agama</th>
+                        <th class="text-center">Kewarganegaraan</th>
+                        <th class="text-center">Status Perkawinan</th>
+                        <th class="text-center">Pekerjaan</th>
+                        <th class="text-center">Nama Ayah</th>
+                        <th class="text-center">Nama Ibu</th>
                         <th class="text-center">Created</th>
                         <th class="text-center">Updated</th>
                         <th class="text-center"><i class="fa fa-cogs"></i></th>
@@ -147,7 +147,7 @@
     $(document).ready(function () {
         $('#dataTable').DataTable({
             scrollX: true,
-            width: 100 %
+            width: 80%
         });
     });
 

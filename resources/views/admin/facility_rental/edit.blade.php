@@ -1,12 +1,12 @@
 @extends('template.base_admin')
 
 @section('title')
-<title>{{ env('APP_NAME') }} | Facility Rental</title>
+<title>{{ env('APP_NAME') }} | Sewa Fasilitas</title>
 @endsection
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Edit Facility Rental</h6>
+        <h6>Edit Sewa Fasilitas</h6>
         <hr>
         <form action="{{ route('facility.rental.update',['id' => $facility_rental->id]) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
@@ -16,7 +16,7 @@
                     
 
                     <div class="form-group">
-                        <label for="facility_code">Facility Code</label>
+                        <label for="facility_code">Kode Fasilitas</label>
                         <select name="facility_code" class="custom-select2 custom-select" id="facility_code" disabled>
                             <option value=""></option>
                             @foreach ($facility as $item)
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="amount">Amount</label>
+                        <label for="amount">Jumlah</label>
                         <input type="number" name="amount" class="form-control" value="{{ $facility_rental->amount }}">
                         @error('amount')
                             <div class="text-danger">
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="start_date">Start Date</label>
+                        <label for="start_date">Tanggal Mulai</label>
                         <input type="datetime-local" name="start_date" class="form-control" value="{{ $facility_rental->start_date }}">
                         @error('start_date')
                             <div class="text-danger">
@@ -51,7 +51,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="end_date">End Date</label>
+                        <label for="end_date">Tanggal Selesai</label>
                         <input type="datetime-local" name="end_date" class="form-control" value="{{ $facility_rental->end_date }}">
                         @error('end_date')
                             <div class="text-danger">
@@ -72,7 +72,7 @@
                 <div class="col-lg-6">
 
                     <div class="form-group">
-                        <label for="rental_reasons">rental_reasons</label>
+                        <label for="rental_reasons">Nama Kegiatan</label>
                         <textarea name="rental_reasons" class="form-control">{{ $facility_rental->rental_reasons }}</textarea>
                         @error('rental_reasons')
                             <div class="text-danger">
@@ -82,7 +82,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="person_responsible">person_responsible</label>
+                        <label for="person_responsible">Penanggung Jawab</label>
                         <input type="text" name="person_responsible" class="form-control" value="{{ $facility_rental->person_responsible }}">
                         @error('person_responsible')
                             <div class="text-danger">
@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="telp">telp</label>
+                        <label for="telp">Nomor HP</label>
                         <input type="tel" name="telp" class="form-control" value="{{ $facility_rental->telp }}">
                         @error('telp')
                             <div class="text-danger">

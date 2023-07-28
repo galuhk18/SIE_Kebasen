@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-<title>{{ env('APP_NAME') }} | Birth</title>
+<title>{{ env('APP_NAME') }} | Data Kelahiran</title>
 @endsection
 @section('content')
 <div class="row">
@@ -28,10 +28,10 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
 
-            <h6>Birth</h6>
+            <h6>Data Kelahiran</h6>
             @if(session()->has('admin_id'))
             <a href="{{ route('birth.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i>
-                Add New</a>
+                Tambah</a>
             @endif
         </div>
         <div>
@@ -92,12 +92,12 @@
                     <tr>
                         <th class="text-center">NIK</th>
                         <th class="text-center">No Akta</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Gender</th>
-                        <th class="text-center">Address</th>
-                        <th class="text-center">Date of Birth</th>
-                        <th class="text-center">Father name</th>
-                        <th class="text-center">Mother name</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Jenis Kelamin</th>
+                        <th class="text-center">Alamat</th>
+                        <th class="text-center">Tanggal Lahir</th>
+                        <th class="text-center">Nama Ayah</th>
+                        <th class="text-center">Nama Ibu</th>
                         <th class="text-center">Created</th>
                         <th class="text-center">Updated</th>
                         <th class="text-center"><i class="fa fa-cogs"></i></th>

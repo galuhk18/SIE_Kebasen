@@ -1,12 +1,12 @@
 @extends('template.base_admin')
 
 @section('title')
-<title>{{ env('APP_NAME') }} | Building Management</title>
+<title>{{ env('APP_NAME') }} | Manajemen Gedung</title>
 @endsection
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Edit Building Management</h6>
+        <h6>Edit Data Gedung</h6>
         <hr>
         <form action="{{ route('building.management.update',['id' => $building_management->id]) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
@@ -16,7 +16,7 @@
                     
 
                     <div class="form-group">
-                        <label for="building_code">building_code</label>
+                        <label for="building_code">Kode Gedung</label>
                         <input type="text" name="building_code" class="form-control" value="{{ $building_management->building_code }}">
                         @error('building_code')
                             <div class="text-danger">
@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="building_name">building_name</label>
+                        <label for="building_name">Nama Gedung</label>
                         <input type="text" name="building_name" class="form-control" value="{{ $building_management->building_name }}">
                         @error('building_name')
                             <div class="text-danger">
@@ -46,7 +46,7 @@
 
                     
                     <div class="form-group">
-                        <label for="condition">condition</label>
+                        <label for="condition">Kondisi</label>
                         <input type="text" name="condition" class="form-control" value="{{ $building_management->condition }}">
                         @error('condition')
                             <div class="text-danger">
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="picture">picture</label>
+                        <label for="picture">Dokumentasi</label>
                         <br>
                         <img id="img-preview" src="{{ asset($building_management->picture) }}" width="200px" class="img-thumbnail mb-2" alt="">
 

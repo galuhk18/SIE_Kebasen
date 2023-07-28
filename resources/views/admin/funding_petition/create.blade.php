@@ -1,12 +1,12 @@
 @extends('template.base_admin')
 
 @section('title')
-<title>{{ env('APP_NAME') }} | Funding Petition</title>
+<title>{{ env('APP_NAME') }} | Permohonan Dana</title>
 @endsection
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Funding Petition</h6>
+        <h6>Tambah Data Permohonan Dana</h6>
         <hr>
         <form action="{{ route('funding.petition.store') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -15,7 +15,7 @@
                     
 
                     <div class="form-group">
-                        <label for="date_of_activity">Date of Activity</label>
+                        <label for="date_of_activity">Tanggal Pengajuan</label>
                         <input type="date" name="date_of_activity" class="form-control">
                         @error('date_of_activity')
                             <div class="text-danger">
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="organization_name">organization_name</label>
+                        <label for="organization_name">Nama Organisasi</label>
                         <input type="text" name="organization_name" class="form-control">
                         @error('organization_name')
                             <div class="text-danger">
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="budget_amount">budget_amount</label>
+                        <label for="budget_amount">Jumlah Dana</label>
                         <input type="number" name="budget_amount" class="form-control">
                         @error('budget_amount')
                             <div class="text-danger">
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="event_name">event_name</label>
+                        <label for="event_name">Nama Kegiatan</label>
                         <input type="text" name="event_name" class="form-control">
                         @error('event_name')
                             <div class="text-danger">
@@ -61,7 +61,7 @@
 
                     
                     <div class="form-group">
-                        <label for="person_responsible">person_responsible</label>
+                        <label for="person_responsible">Penanggung Jawab</label>
                         <input type="text" name="person_responsible" class="form-control">
                         @error('person_responsible')
                             <div class="text-danger">
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="proposal">proposal</label>
+                        <label for="proposal">Unggah Proposal</label>
                         <input type="file" name="proposal" class="form-control">
                         <small>*) Format .pdf</small>
                         @error('proposal')
@@ -90,7 +90,7 @@
 
             <div class="d-flex justify-content-end">
 
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
             </div>
         </form>
     </div>

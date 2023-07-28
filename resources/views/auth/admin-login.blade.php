@@ -21,7 +21,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="font-weight-bold text-gray-900">{{ env('APP_NAME') }}</h1>
+                                        <h2 class="font-weight-bold text-gray-900">SISTEM INFORMASI EKSEKUTIF LAPORAN DESA KEBASEN</h2>
                                         <h6 class="">Login Admin</h6>
                                     </div>
                                     <hr>

@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Activity Report</h6>
+        <h6>Tambah</h6>
         <hr>
         <form action="{{ route('activity.report.store') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -15,7 +15,7 @@
                     
 
                     <div class="form-group">
-                        <label for="date_of_activity">Date of Activity</label>
+                        <label for="date_of_activity">Tanggal Kegiatan</label>
                         <input type="date" name="date_of_activity" class="form-control">
                         @error('date_of_activity')
                             <div class="text-danger">
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="organization_name">organization_name</label>
+                        <label for="organization_name">Nama Organisasi</label>
                         <input type="text" name="organization_name" class="form-control">
                         @error('organization_name')
                             <div class="text-danger">
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="information">information</label>
+                        <label for="information">Keterangan</label>
                         <input type="text" name="information" class="form-control">
                         @error('information')
                             <div class="text-danger">
@@ -53,7 +53,7 @@
 
                     
                     <div class="form-group">
-                        <label for="person_responsible">person_responsible</label>
+                        <label for="person_responsible">Penanggung Jawab</label>
                         <input type="text" name="person_responsible" class="form-control">
                         @error('person_responsible')
                             <div class="text-danger">
@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="documentation">documentation</label>
+                        <label for="documentation">Dokumentasi</label>
                         <br>
                         <img id="img-preview" width="200px" class="img-thumbnail mb-2" alt="">
 
@@ -82,7 +82,7 @@
 
             <div class="d-flex justify-content-end">
 
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
             </div>
         </form>
     </div>

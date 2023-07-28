@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Service</h6>
+        <h6>Tambah Data Layanan</h6>
         <hr>
         <form action="{{ route('service.store') }}" method="post">
             @csrf
@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control">
                         @error('name')
                             <div class="text-danger">
@@ -35,7 +35,7 @@
 
 
                     <div class="form-group">
-                        <label for="date_of_service">date_of_service</label>
+                        <label for="date_of_service">Tanggal Layanan</label>
                         <input type="date" name="date_of_service" class="form-control">
                         @error('date_of_service')
                             <div class="text-danger">
@@ -49,7 +49,7 @@
 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="information">Information</label>
+                        <label for="information">Keterangan</label>
                         <textarea name="information" class="form-control"></textarea>
                         @error('information')
                             <div class="text-danger">
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="service_type">service_type</label>
+                        <label for="service_type">Jenis Layanan</label>
                         <select name="service_type" class="custom-select">
                             <option value=""></option>
                             @foreach ($service_type as $item)
@@ -81,7 +81,7 @@
 
             <div class="d-flex justify-content-end">
 
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
             </div>
         </form>
     </div>

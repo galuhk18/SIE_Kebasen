@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Building Management</h6>
+        <h6>Tambah Data Gedung</h6>
         <hr>
         <form action="{{ route('building.management.store') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -15,7 +15,7 @@
                     
 
                     <div class="form-group">
-                        <label for="building_code">building_code</label>
+                        <label for="building_code">Kode Gedung</label>
                         <input type="text" name="building_code" class="form-control">
                         @error('building_code')
                             <div class="text-danger">
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="building_name">building_name</label>
+                        <label for="building_name">Nama Gedung</label>
                         <input type="text" name="building_name" class="form-control">
                         @error('building_name')
                             <div class="text-danger">
@@ -45,7 +45,7 @@
 
                     
                     <div class="form-group">
-                        <label for="condition">condition</label>
+                        <label for="condition">Kondisi</label>
                         <input type="text" name="condition" class="form-control">
                         @error('condition')
                             <div class="text-danger">
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="picture">picture</label>
+                        <label for="picture">Dokumentasi</label>
                         <br>
                         <img id="img-preview" width="200px" class="img-thumbnail mb-2" alt="">
 
@@ -74,7 +74,7 @@
 
             <div class="d-flex justify-content-end">
 
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
             </div>
         </form>
     </div>

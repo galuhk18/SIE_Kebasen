@@ -28,10 +28,10 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
 
-            <h6>Service</h6>
+            <h6>Data Layanan</h6>
             @if(session()->has('admin_id'))
             <a href="{{ route('service.create') }}" class="btn btn-primary"> <i
-                    class="fa fa-plus"></i> Add New</a>
+                    class="fa fa-plus"></i> Tambah</a>
             @endif
         </div>
         <div>
@@ -44,10 +44,10 @@
                 <thead>
                     <tr>
                         <th class="text-center">NIK</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Date of Service</th>
-                        <th class="text-center">Information</th>
-                        <th class="text-center">Service Type</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Tanggal Layanan</th>
+                        <th class="text-center">Keterangan</th>
+                        <th class="text-center">Jenis Layanan</th>
                         <th class="text-center">Created</th>
                         <th class="text-center">Updated</th>
                         <th class="text-center"><i class="fa fa-cogs"></i></th>

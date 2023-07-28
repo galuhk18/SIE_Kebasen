@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME') }} | Funding Petition</title>
+    <title>{{ env('APP_NAME') }} | Permohonan Dana</title>
 @endsection
 @section('content')
     <div class="row">
@@ -50,10 +50,9 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
-                <h6>Funding Petition</h6>
+                <h6>Permohonan Dana</h6>
                 @if (session()->has('admin_id'))
-                    <a href="{{ route('funding.petition.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add
-                        New</a>
+                    <a href="{{ route('funding.petition.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <div>
@@ -65,12 +64,12 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">Date of Activity</th>
-                            <th class="text-center">organization_name</th>
-                            <th class="text-center">budget_amount</th>
-                            <th class="text-center">event_name</th>
-                            <th class="text-center">person_responsible</th>
-                            <th class="text-center">proposal</th>
+                            <th class="text-center">Tanggal Pengajuan</th>
+                            <th class="text-center">Nama Organisasi</th>
+                            <th class="text-center">Jumlah Dana</th>
+                            <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Penanggung Jawab</th>
+                            <th class="text-center">Unggah Proposal</th>
                             <th class="text-center">status</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>

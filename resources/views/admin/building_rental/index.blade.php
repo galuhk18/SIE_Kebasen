@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME')  }} | Building Rental</title>
+    <title>{{ env('APP_NAME')  }} | Sewa Gedung</title>
 @endsection
 @section('content')
 <div class="row">
@@ -56,7 +56,7 @@
                 <h6>Building Rental</h6>
                 @if (session()->has('admin_id'))
                     
-                <a href="{{ route('building.rental.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('building.rental.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <a href="{{ route('building.rental.export') }}" class="btn btn-success"> <i
@@ -66,13 +66,13 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">building_code</th>
-                            <th class="text-center">building_name</th>
-                            <th class="text-center">start_date</th>
-                            <th class="text-center">end_date</th>
-                            <th class="text-center">number_of_people</th>
-                            <th class="text-center">person_responsible</th>
-                            <th class="text-center">telp</th>
+                            <th class="text-center">Kode Gedung</th>
+                            <th class="text-center">Nama Gedung</th>
+                            <th class="text-center">Tanggal Mulai</th>
+                            <th class="text-center">Tanggal Selesai</th>
+                            <th class="text-center">Jumlah Orang</th>
+                            <th class="text-center">Penanggung Jawab</th>
+                            <th class="text-center">Nomor HP</th>
                             <th class="text-center">status</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>

@@ -6,7 +6,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h6>Add New Birth</h6>
+        <h6>Tambah</h6>
         <hr>
         <form action="{{ route('birth.store') }}" method="post">
             @csrf
@@ -36,7 +36,7 @@
                    
 
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Nama</label>
                         <input type="text" name="name" class="form-control">
                         @error('name')
                             <div class="text-danger">
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="gender" class="d-block">Gender</label>
+                        <label for="gender" class="d-block">Jenis Kelamin</label>
                         @foreach($gender as $ge)
 
                             <div class="custom-control custom-radio custom-control-inline">
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="address">Alamat</label>
                         <textarea name="address" class="form-control"></textarea>
                         @error('address')
                             <div class="text-danger">
@@ -83,7 +83,7 @@
                 <div class="col-lg-6">
                     
                     <div class="form-group">
-                        <label for="date_of_birth">Date of Birth</label>
+                        <label for="date_of_birth">Tanggal Lahir</label>
                         <input type="date" name="date_of_birth" class="form-control">
                         @error('date_of_birth')
                             <div class="text-danger">
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="father_name">Father Name</label>
+                        <label for="father_name">Nama Ayah</label>
                         <input type="text" name="father_name" class="form-control">
                         @error('father_name')
                             <div class="text-danger">
@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mother_name">Mother Name</label>
+                        <label for="mother_name">Nama Ibu</label>
                         <input type="text" name="mother_name" class="form-control">
                         @error('mother_name')
                             <div class="text-danger">
@@ -119,7 +119,7 @@
 
             <div class="d-flex justify-content-end">
 
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
             </div>
         </form>
     </div>

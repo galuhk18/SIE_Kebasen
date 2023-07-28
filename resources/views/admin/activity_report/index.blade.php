@@ -50,9 +50,9 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
-                <h6>Activity Report</h6>
+                <h6>Laporan Kegiatan</h6>
                 @if (session()->has('admin_id'))
-                <a href="{{ route('activity.report.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('activity.report.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <div>
@@ -64,12 +64,12 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">Date of Activity</th>
-                            <th class="text-center">organization_name</th>
-                            <th class="text-center">information</th>
-                            <th class="text-center">person_responsible</th>
-                            <th class="text-center">documentation</th>
-                            <th class="text-center">status</th>
+                            <th class="text-center">Tanggal Kegiatan</th>
+                            <th class="text-center">Nama Organisasi</th>
+                            <th class="text-center">Keterangan</th>
+                            <th class="text-center">Penanggung Jawab</th>
+                            <th class="text-center">Dokumentasi</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>
                             <th class="text-center"><i class="fa fa-cogs"></i></th>

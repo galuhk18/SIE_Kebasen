@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME')  }} | Building Management</title>
+    <title>{{ env('APP_NAME')  }} | Manajemen Gedung</title>
 @endsection
 @section('content')
 <div class="row">
@@ -28,9 +28,9 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
 
-                <h6>Building Management</h6>
+                <h6>Manajemen Gedung</h6>
                 @if(session()->has('admin_id'))
-                <a href="{{ route('building.management.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('building.management.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i>Tambah</a>
                 @endif
             </div>
             <div>
@@ -42,11 +42,11 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">building_code</th>
-                            <th class="text-center">building_name</th>
-                            <th class="text-center">condition</th>
-                            <th class="text-center">picture</th>
-                            <th class="text-center">is rental</th>
+                            <th class="text-center">Kode Gedung</th>
+                            <th class="text-center">Nama Gedung</th>
+                            <th class="text-center">Kondisi</th>
+                            <th class="text-center">Dokumentasi</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>
                             <th class="text-center"><i class="fa fa-cogs"></i></th>

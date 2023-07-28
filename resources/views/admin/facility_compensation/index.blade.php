@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME')  }} | Facility Compensation</title>
+    <title>{{ env('APP_NAME')  }} | Informasi Ganti Rugi</title>
 @endsection
 @section('content')
 <div class="row">
@@ -55,7 +55,7 @@
 
                 <h6>Facility Compensation</h6>
                 @if (session()->has('admin_id'))
-                <a href="{{ route('facility.compensation.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('facility.compensation.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Tambah</a>
                 @endif
             </div>
             <div>
@@ -68,12 +68,12 @@
                     <thead>
                         <tr>
     
-                            <th class="text-center">facility_name</th>
-                            <th class="text-center">amount</th>
-                            <th class="text-center">amount_compensation</th>
-                            <th class="text-center">person_responsible</th>
-                            <th class="text-center">picture</th>
-                            <th class="text-center">telp</th>
+                            <th class="text-center">Nama Barang</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Nominal</th>
+                            <th class="text-center">Penanggung Jawab</th>
+                            <th class="text-center">Dokumentasi</th>
+                            <th class="text-center">Nomor HP</th>
                             <th class="text-center">status</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>

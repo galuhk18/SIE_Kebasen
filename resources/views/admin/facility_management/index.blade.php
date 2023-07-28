@@ -1,7 +1,7 @@
 @extends('template.base_admin')
 
 @section('title')
-    <title>{{ env('APP_NAME')  }} | Facility Management</title>
+    <title>{{ env('APP_NAME')  }} | Manajemen Fasilitas</title>
 @endsection
 @section('content')
 <div class="row">
@@ -30,7 +30,7 @@
 
                 <h6>Facility Management</h6>
                 @if(session()->has('admin_id'))
-                <a href="{{ route('facility.management.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Add New</a>
+                <a href="{{ route('facility.management.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i>Tambah</a>
                 @endif
             </div>
             <div>
@@ -42,11 +42,11 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th class="text-center">facility_code</th>
-                            <th class="text-center">facility_name</th>
-                            <th class="text-center">condition</th>
-                            <th class="text-center">picture</th>
-                            <th class="text-center">stock</th>
+                            <th class="text-center">Kode Fasilitas</th>
+                            <th class="text-center">Nama Fasilitas</th>
+                            <th class="text-center">Kondisi</th>
+                            <th class="text-center">Dokumentasi</th>
+                            <th class="text-center">Jumlah</th>
                             <th class="text-center">Created</th>
                             <th class="text-center">Updated</th>
                             <th class="text-center"><i class="fa fa-cogs"></i></th>
